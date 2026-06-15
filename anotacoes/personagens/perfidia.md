@@ -7,14 +7,14 @@ Cabelos loiros com mechas brancas, sempre com um longo vestido rosa claro. Suas 
 de coloração roxa e cinza. 
 
 Possiveis passivas:
-1. Quando o evento "Terceira Lua" chegar, ela ganharia um aumento de dano em todas as habilidades.
+-------- 1. Quando o evento "Terceira Lua" chegar, ela ganharia um aumento de dano em todas as habilidades.
 (junto disso, ela poderia ter uma habilidade que acelera a chegada da Terceira Lua?).
 
 2. Ela cancela os buffs positivos do evento "Terceira Lua" no inimigo que está enfrentando.
 
 3. Ela escolher entre um dos efeitos diferentes ligados a Lua?
 
-4. Suas habilidades mudaram após a Lua --> Essa faz muito sentido
+----------  4. Suas habilidades mudaram após a Lua --> Essa faz muito sentido
 
 Possiveis habilidades:
 
