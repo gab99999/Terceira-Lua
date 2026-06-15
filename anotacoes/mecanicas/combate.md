@@ -106,9 +106,9 @@ Exemplos:
 
 Golpe Astral
 
-* 45 de dano
+* 85 de dano
 * Cura 20 de vida
-* 80% de precisão
+* (Precisão = 80)
 
 ---
 
@@ -139,12 +139,7 @@ Exemplos:
 Capturar Estrela de Cura
 
 * Recupera vida
-* 50% de precisão
-
-Capturar Estrela de Foco
-
-* Aumenta precisão
-* 40% de precisão
+* Precisão = 50
 
 ---
 
