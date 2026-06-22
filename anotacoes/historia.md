@@ -2,7 +2,7 @@
 
 História do jogo:
 
-Há 3 anos uma Segunda Lua apareceu no céu da Terra.
+Há 6 anos uma Segunda Lua apareceu no céu da Terra.
 Junto dela surgiu algo impossível: magia.
 O fenômeno trouxe novas formas de energia, conhecimento e tecnologia. Cientistas passaram a estudar o arcanismo, novas faculdades foram criadas e diversas profissões passaram a utilizar magia em seu cotidiano.
 

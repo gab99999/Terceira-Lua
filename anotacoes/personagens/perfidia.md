@@ -6,6 +6,11 @@ Descrição:
 Cabelos loiros com mechas brancas, sempre com um longo vestido rosa claro. Suas magias são
 de coloração roxa e cinza. 
 
+Atributos:
+
+Vida - 780
+Evasão - 4
+
 Possiveis passivas:
 -------- 1. Quando o evento "Terceira Lua" chegar, ela ganharia um aumento de dano em todas as habilidades.
 (junto disso, ela poderia ter uma habilidade que acelera a chegada da Terceira Lua?).
