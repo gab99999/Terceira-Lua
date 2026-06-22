@@ -1,6 +1,6 @@
 ## Amara, a Química Mágica
 
-🌑 Uma química renomada, Amara proporciona a mistura da ciência e magia. Ela modifica seus estudos químicos para criar magia.
+🌙 Uma química renomada, Amara proporciona a mistura da ciência e magia. Ela modifica seus estudos químicos para criar magia.
 
 # Descrição: 
 Pele preta, cabelos crespos em grandes tranças, sempre está com uma saia preta, bolsa de marca, jaqueta de couro verde e acessórios dourados. 
