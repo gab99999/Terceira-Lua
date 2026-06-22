@@ -147,7 +147,7 @@ Capturar Estrela de Cura
 
 ## Chegada da Terceira Lua
 
-Acontece por volta do turno 9.
+Acontece por volta do turno 9-12 (aleatório no começo da partida).
 
 Ao chegar:
 
