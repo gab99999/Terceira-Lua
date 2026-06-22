@@ -8,7 +8,7 @@ Pele vermelha, curtos cabelos lisos e pretos, olhos com dobra epicântica, vesti
 # Atributos:
 
 Vida - 640
-Evasão - 0
+Evasão - 2
 
 # Passiva:
 
