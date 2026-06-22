@@ -1,24 +1,24 @@
-# Tainá, a Gêmea
+## Tainá, a Gêmea
 
 🌑 Irmã de Raoni, ela afirma que a magia assassinou a sua mãe. Utiliza de adagas para eliminar seus inimigos.
 
-Descrição:
+# Descrição:
 Pele vermelha, longos cabelos lisos e pretos, olhos com dobra epicântica, vestimentas pretas, além de adagas
 em vários cantos de seu traje.
 
-Atributos:
+# Atributos:
 
 Vida - 700
-Evasão - 15
+Evasão - 12
 
-Passiva:
+# Passiva:
 
 Dor Alimenta os Fortes - Tainá aumentará seu dano com base nas suas dores.
 
 Ao chegar aos 60% de vida, ela terá um aumento de 20% de dano em inimigos (pode mudar)
 Ao chegar aos 30% de vida, seu aumento irá para 50% (pode mudar)
 
-Possiveis habilidades:
+# Habilidades:
 
 Dilaceração dupla (80) - Tainá utiliza duas adagas e tenta confundir seu inimigo ao esfaquea-lo e a si mesmo. Desse modo, causa 75 -- 110 de dano ao inimigo e 35-50 em si. Além disso, diminui em 1 ponto a evasão do inimigo atingido. 
 
