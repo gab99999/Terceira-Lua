@@ -3,7 +3,7 @@
 🌙 Uma das mais famosas ativistas Lunaristas, Perfídia usa magia pura da luz das Luas.
 
 Descrição:
-Cabelos loiros com mechas brancas, sempre com um longo vestido rosa claro. Suas magias são
+Pele branca, cabelos loiros com mechas brancas, sempre com um longo vestido rosa claro. Suas magias são
 de coloração roxa e cinza. 
 
 Atributos:
@@ -14,6 +14,7 @@ Evasão - 4
 Passiva:
 
 Cria Lunar - Devido sua ligação especial com as Luas, Perfídia recebe conceitos únicos ligados a Terceira Lua.
+
 Possui habilidades que avançam o caminho da Terceira Lua.
 Após a chegada da Terceira Lua, todas as suas habilidades mudam.
 Pode escolher um buff secundário da Terceira Lua ou cancelar os efeitos positivos do inimigo.

@@ -13,6 +13,7 @@ Evasão - 0
 Passiva:
 
 Cura Alimenta os Fracos - Raoni utiliza de suas habilidade curativas para destruir inimigos.
+
 Sempre que o Gêmeo utiliza uma habilidade curativa, recebe acúmulos de plumagem.
 Habilidades de Raoni possuem seu dano dano aumentado com base nos acúmulos de plumagem.
 
