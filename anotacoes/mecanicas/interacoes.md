@@ -6,10 +6,11 @@ energia mágica.
 Capture uma Estrela distante e possua seu poder! Porém, lembre-se que é possível
 capturar apenas 1 vez uma Estrela específica. Nem mesmo inimigos poderão capturá-la depois.
 
-1. Estrela de Cura - Cure 80-100 pontos de vida (Precisão = 50)
+1. Estrela de Cura - Cure 100-200 pontos de vida (Precisão = 45)
 2. Estrela de Precisão - Aumente os pontos de precisão em 8-10 de todas as habilidades e interações (Precisão = 35)
 3. Estrela de Dano - Aumente o dano das suas habilidades [pensar no dano] - (Precisão = 40)
-4. Estrela da Evasão - Aumente sua evasão em 3-5 pontos (Precisão = 50)
+4. Estrela da Evasão - Aumente sua evasão em 3-5 pontos (Precisão = 45)
+5. Estrela Misteriosa - Receba aleatoriamente o poder de uma das estrelas (Precisão: 55)
 
 ## Absorver Sol 
 

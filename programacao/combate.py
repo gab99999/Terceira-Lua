@@ -43,8 +43,9 @@ while vida1 > 0 and vida2 > 0:
     else:
         if pode_agir:
             print(personagem2)
-    turno = True
+    pode_agir = True
     qualturno = not qualturno
+    qntturno += 1
 
 
         
