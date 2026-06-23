@@ -53,8 +53,8 @@ antonius = {
 # Nicolas
 
 nicolas = {
-    "vida": 0,  # definir
-    "evasao": 0,  # definir
+    "vida": 820,  
+    "evasao": 3,  
 
     "passiva": dualidade_mesclada,
 
