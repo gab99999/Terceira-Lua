@@ -79,3 +79,41 @@ def pluralidade_estelar(usuario, alvo):
 def brutalizar_as_luas(usuario, alvo):
     pass
 
+# ==========================================
+# RAONI
+# ==========================================
+
+def cura_alimenta_os_fracos(usuario, alvo):
+    pass
+
+
+def foco_em_penas(usuario, alvo):
+    pass
+
+
+def especializacao_em_aves(usuario, alvo):
+    pass
+
+
+def inversao_curativa(usuario, alvo):
+    pass
+
+
+# ==========================================
+# TAINÁ
+# ==========================================
+
+def dor_alimenta_os_fortes(usuario, alvo):
+    pass
+
+
+def dilaceracao_dupla(usuario, alvo):
+    pass
+
+
+def arremesso_de_lamina(usuario, alvo):
+    pass
+
+
+def apunhalada_pacifica(usuario, alvo):
+    pass
