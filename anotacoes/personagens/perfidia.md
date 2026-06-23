@@ -31,7 +31,7 @@ Brutalizar as Luas (85) - Perfídia move suas emoções para suas mães. Desse m
 
 Invocação Lunar (80) - Perfídia chama pela Lua, que agora a responde claramente. Desse modo, causa 90 - 120 de dano no inimigo. E tem (Precisão: 20) de curar 45 - 60.
 
-Pluralidade Estelar (75) - Perfídia, agora repleta de conhecimentos novos, utiliza-os contra seus inimigos. Desse modo, causa 110 - 140 de dano no inimigo e se cura em 40 - 55. 
+Pluralidade Estelar (70) - Perfídia, agora repleta de conhecimentos novos, utiliza-os contra seus inimigos. Desse modo, causa 100 - 140 de dano no inimigo e se cura em 40 - 55. 
 
 Brutalizar as Luas (85) - Perfídia move suas emoções para suas mães, que ouvem seu lamento. Desse modo, causa 85 - 110 de dano no inimigo. Além disso, tem (Precisão: 25) de parar o próximo turno do inimigo.
 

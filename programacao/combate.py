@@ -33,5 +33,19 @@ evasaopontual2 = 0
 
 print(personagem1)
 
+qualturno = random.choice([True, False])
+pode_agir = True
+
 while vida1 > 0 and vida2 > 0:
+    if qualturno:
+        if pode_agir:
+            print(personagem1)
+    else:
+        if pode_agir:
+            print(personagem2)
+    turno = True
+    qualturno = not qualturno
+
+
+        
 

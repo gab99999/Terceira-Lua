@@ -1,4 +1,5 @@
 import random
+
 # ------------------------
 #          Básico
 # ------------------------
@@ -33,6 +34,14 @@ def aumento_precisao (pontos, precisaobase):
 
 def aumento_evasao (pontos, evasaobase):
     return pontos + evasaobase
+
+# ------------------------
+#         Extras
+# ------------------------
+
+def parar_turno(pontos):
+    return (not precisao(pontos))
+
 
 
 
