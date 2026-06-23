@@ -9,7 +9,7 @@ de coloração roxa e cinza.
 # Atributos:
 
 Vida - 780
-Evasão - 4
+Evasão - 5
 
 # Passiva:
 

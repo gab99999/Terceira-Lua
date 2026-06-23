@@ -1,10 +1,19 @@
-import personagens as skill
+from personagens import personagens as skill
 import random
 
-# personagem1 = escolher_personagem(x)
-# personagem2 = escolher_personagem(y)
+escolha1 = 'Amara'
+escolha2 = 'Perfídia'
 
-vida1 = skill.personagem1[vida]
+personagem1 = skill[escolha1]
+personagem2 = skill[escolha2]
 
-while vida1 > 0 and vida2 > 0:
+vida1 = personagem1['vida']
+vida2 = personagem2['vida']
+
+evasao1 = personagem1['evasao']
+evasao2 = personagem2['evasao']
+
+print(personagem1)
+
+#while vida1 > 0 and vida2 > 0:
 

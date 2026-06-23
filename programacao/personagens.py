@@ -33,6 +33,7 @@ from habilidades import (
     apunhalada_pacifica
 )
 
+
 # Amara
 
 amara = {
@@ -78,7 +79,7 @@ nicolas = {
 
 perfidia = {
     "vida": 780,
-    "evasao": 4,
+    "evasao": 5,
 
     "passiva": cria_lunar,
 
@@ -106,11 +107,19 @@ raoni = {
 
 taina = {
     "vida": 700,
-    "evasao": 12,
+    "evasao": 13,
 
     "passiva": dor_alimenta_os_fortes,
 
     "habilidade_1": dilaceracao_dupla,
     "habilidade_2": arremesso_de_lamina,
     "habilidade_3": apunhalada_pacifica
+}
+
+personagens = {
+    "Amara": amara,
+    "Antonius": antonius,
+    "Perfídia": perfidia,
+    "Raoni": raoni,
+    "Tainá": taina
 }
