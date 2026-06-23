@@ -7,8 +7,8 @@ Albino (se ficar dificil demais de fazer, pq normalmente as IAs não sabem fazer
 
 # Atributos: 
 
-Vida -
-Evasão - 
+Vida - 820
+Evasão - 3
 
 # Passiva:
 
