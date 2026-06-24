@@ -71,9 +71,9 @@ antonius = {
     "habilidade_3": tiro_certeiro
 }
 
-# Nicolas
+# Nicholas
 
-nicolas = {
+nicholas = {
     "vida": 820,  
     "evasao": 3,  
 
