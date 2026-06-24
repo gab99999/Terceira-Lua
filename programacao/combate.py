@@ -49,8 +49,11 @@ def criar_combatente(personagem):
     combatente["precisao_bonus"] = 0
     combatente["evasao_bonus"] = 0
 
-    combatente["dano_bonus"] = 0
-    combatente["cura_bonus"] = 0
+    combatente["dano_porcentagem"] = 0
+    combatente["cura_porcentagem"] = 0
+
+    combatente["dano_pontos"] = 0
+    combatente["cura_pontos"] = 0
 
     return combatente
 

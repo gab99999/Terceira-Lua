@@ -17,11 +17,28 @@ import random
 # ==========================================
 
 def morte_lenta(usuario, alvo):
-    pass
+    match usuario['veneno']:
+        case 0:
+            pass
+        case 1:
+            usuario['vida'] = usuario['vida'] - b.dano(3, 7)
+        case 2:
+            usuario['vida'] = usuario['vida'] - b.dano(5, 10)
+        case 3:
+            usuario['vida'] = usuario['vida'] - b.dano(6, 12)
+        case 4:
+            usuario['vida'] = usuario['vida'] - b.dano(8, 16)
+        case 5:
+            usuario['vida'] = usuario['vida'] - b.dano(10, 20)
 
 
 def reacao_magica(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(77-alvo['evasao'])):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano ())
+        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(25-alvo['evasao'])):
+            alvo['pode_agir'] = False
+    else:
+        pass
 
 
 def ondas_elevadas(usuario, alvo):

@@ -13,6 +13,10 @@ def dano(min, max):
     """Retorna um dano aleatório entre min e max."""
     return random.randint(min, max)
 
+def cura(min, max):
+    """Retorna uma cura aleatória entre min e max."""
+    return random.randint(min, max)
+
 
 def precisao(pontos):
     """Retorna True se o teste de precisão for bem-sucedido."""
