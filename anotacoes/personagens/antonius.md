@@ -15,7 +15,7 @@ Evasão - 5
 Treinado para Tudo - Antonius usa seus conhecimentos táticos para obter vantagem sobre seus inimigos.
 
 Sempre que receber dano de qualquer fonte, Antonius adquire 1 ponto de resistência.
-O artilheiro pode usar esses pontos em seu turno (sem gastar o turno) para obter certos aspectos:
+O artilheiro receberá aleatoriamente 1 dos certos aspectos:
 
 1. Aumentar sua evasão em 1 
 2. Aumentar a precisão de todas as habilidades e interações em 1.

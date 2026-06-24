@@ -47,6 +47,7 @@ from habilidades import (
 # Amara
 
 amara = {
+    'nome': 'Amara',
     "vida": 900,
     "evasao": 3,
 
@@ -61,6 +62,7 @@ amara = {
 # Antonius
 
 antonius = {
+    'nome': 'Antonius',
     "vida": 1000,
     "evasao": 5,
 
@@ -74,6 +76,7 @@ antonius = {
 # Nicholas
 
 nicholas = {
+    'nome': 'Nicholas',
     "vida": 820,  
     "evasao": 3,  
 
@@ -88,6 +91,7 @@ nicholas = {
 # Perfídia
 
 perfidia = {
+    'nome': 'Perfídia',
     "vida": 780,
     "evasao": 5,
 
@@ -102,6 +106,7 @@ perfidia = {
 # Raoni
 
 raoni = {
+    'nome': 'Raoni',
     "vida": 640,
     "evasao": 2,
 
@@ -116,6 +121,7 @@ raoni = {
 # Tainá
 
 taina = {
+    'nome': 'Tainá',
     "vida": 700,
     "evasao": 13,
 

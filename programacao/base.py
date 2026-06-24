@@ -18,9 +18,12 @@ def cura(min, max):
     return random.randint(min, max)
 
 
-def precisao(pontos):
+def precisao(pontos, alvo):
     """Retorna True se o teste de precisão for bem-sucedido."""
     x = random.randint(1, 100)
+
+    if alvo['cego'] == True:
+        pontos = pontos//2
 
     if x <= pontos:
         return True
@@ -66,8 +69,12 @@ def aumento_evasao(pontos, evasaobase):
 #         Extras
 # ------------------------
 
-def parar_turno(pontos, alvo):
+def parar_turno(alvo, usuario):
     """Impede o alvo de agir caso o teste de precisão tenha sucesso."""
     
-    if precisao(pontos):
-        alvo["pode_agir"] = False
+    if aumento_precisao(alvo['precisao_bonus'], precisao(25-alvo['evasao'], usuario)):
+            alvo['pode_agir'] = False
+    else:
+        pass
+
+

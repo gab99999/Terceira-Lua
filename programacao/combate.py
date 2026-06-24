@@ -44,7 +44,8 @@ def criar_combatente(personagem):
     combatente["pode_agir"] = True
 
     combatente["veneno"] = 0
-    combatente["cego"] = 0
+    combatente["cego"] = False
+    combatente['resistencia'] = 0
 
     combatente["precisao_bonus"] = 0
     combatente["evasao_bonus"] = 0
@@ -128,6 +129,8 @@ while personagem1['vida'] > 0 and personagem2['vida'] > 0:
             personagem1['pode_agir'] = True
         else:
             personagem2['pode_agir'] = True
+        if jogador['cego']:
+            jogador['cego'] = False
         qualturno = not qualturno
         qntturno += 1
 

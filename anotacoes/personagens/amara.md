@@ -31,4 +31,4 @@ Reação Mágica (77) - Amara utiliza uma fórmula explosiva e mágica para atac
 
 Ondas Elevadas (86) - Amara modifica a estrutura da atmosfera em volta de seu inimigo, o envenenando com elementos químicos diversos. Desse modo, causa 55 - 90 de dano. Aplica 1 veneno.
 
-Cura envenenada (60) - Amara inverte os meios, transformando sofrimento alheio em sua cura. Desse modo, causa 70 - 140 de dano e se cura com base no dano máximo do nivel de veneno mágico do inimigo multiplicado por 3. Assim, retira todos os venenos do inimigo, e logo depois aplica mais 2 venenos (conforme a passiva).
+Cura envenenada (60) - Amara inverte os meios, transformando sofrimento alheio em sua cura. Desse modo, causa 70 - 140 de dano e se cura com base no dano máximo do nivel de veneno mágico do inimigo multiplicado por 2. Assim, retira todos os venenos do inimigo, e logo depois aplica mais 2 venenos (conforme a passiva).

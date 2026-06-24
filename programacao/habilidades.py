@@ -30,14 +30,16 @@ def morte_lenta(usuario, alvo):
             usuario['vida'] = usuario['vida'] - b.dano(8, 16)
         case _:
             usuario['vida'] = usuario['vida'] - b.dano(10, 20)
+    antonius_dano(usuario)
 
 # VAI PRECISAR DE BALANCEAMENTO
 
 def reacao_magica(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(77-alvo['evasao'])):
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(77-alvo['evasao'], usuario)):
         alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (50, 115))
         alvo['veneno'] += 2
-        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(25-alvo['evasao'])):
+        antonius_dano(alvo)
+        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(25-alvo['evasao'], usuario)):
             alvo['pode_agir'] = False
         else:
             pass
@@ -47,9 +49,10 @@ def reacao_magica(usuario, alvo):
         
 
 def ondas_elevadas(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(86-alvo['evasao'])):
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(86-alvo['evasao'], usuario)):
         alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (60, 100))
         alvo['veneno'] += 1
+        antonius_dano(alvo)
     else:
         if alvo['veneno'] > 0:
             alvo['veneno'] -= 1
@@ -57,22 +60,25 @@ def ondas_elevadas(usuario, alvo):
 
 
 def cura_envenenada(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(86-alvo['evasao'])):
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(86-alvo['evasao'], usuario)):
         alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (80, 140))
+        antonius_dano(alvo)
 
         match alvo['veneno']:
             case 0:
                 pass
             case 1:
-                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(7*2))
+                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(7, 7)*2)
             case 2:
-                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(10*2))
+                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(10, 10)*2)
             case 3:
-                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(12*2))
+                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(12, 12)*2)
             case 4:
-                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(16*2))
+                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(16, 16)*2)
             case _:
-                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(20*2))
+                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(20, 20)*2)
+        if usuario['vida']>usuario['vida_maxima']:
+            usuario['vida'] = usuario['vida_maxima']
                 
         alvo['veneno'] = 0
 
@@ -86,16 +92,39 @@ def cura_envenenada(usuario, alvo):
 # ANTONIUS
 # ==========================================
 
+def antonius_dano(alvo):
+    if alvo['nome'] == 'Antonius':
+        alvo['resistencia'] += 1
+
+
 def treinado_para_tudo(usuario, alvo):
-    pass
+    if usuario['nome'] == 'Antonius' and usuario['resistencia'] >= 1: 
+        x = random.radint(1, 3)
+        match x:
+            case 1:
+                usuario['evasao'] += 1
+                print ('Evasão Aumentada!')
+            case 2:
+                usuario['precisao_bonus'] += 1
+            case 3:
+                usuario['vida'] += b.aumento_cura(usuario['cura_porcentagem'], b.cura(0, 30))
+                if usuario['vida']>usuario['vida_maxima']:
+                    usuario['vida'] = usuario['vida_maxima']
+        
 
 
 def soco_tatico(usuario, alvo):
-    pass
-
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(75-alvo['evasao'], usuario)):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (55, 115))
+        antonius_dano(alvo)
+    
 
 def granada_de_luz(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(75-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (45, 100))
+        antonius_dano(alvo)
+        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(25-alvo['evasao'])):
+            alvo["cego"] = True
 
 
 def tiro_certeiro(usuario, alvo):
