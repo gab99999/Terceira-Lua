@@ -1,3 +1,15 @@
+"""
+combate.py
+
+Responsável pelo sistema de batalha.
+
+Funções principais:
+    - Controle de turnos
+    - Aplicação de habilidades
+    - Aplicação de efeitos
+    - Verificação de vitória
+"""
+
 from personagens import personagens as skill
 import random
 
@@ -6,6 +18,12 @@ import random
 # ------------------------
 
 def criar_combatente(personagem):
+
+    """
+    Cria uma cópia temporária de um personagem
+    para ser utilizada durante uma batalha.
+
+    """
     combatente = personagem.copy()
 
     combatente["vida_maxima"] = combatente["vida"]
@@ -27,13 +45,13 @@ def criar_combatente(personagem):
 #        Variáveis
 # ------------------------
 
-escolha1 = 'Amara'
+escolha1 = 'Amara' #escolha que acontece em outra área
 escolha2 = 'Perfídia'
 
-personagem1 = criar_combatente(skill[escolha1])
+personagem1 = criar_combatente(skill[escolha1]) #personagem que vai ser utilizado
 personagem2 = criar_combatente(skill[escolha2])
 
-qualturno = random.choice([True, False])
+qualturno = random.choice([True, False]) #qual personagem começa
 
 # ------------------------
 #         Combate
