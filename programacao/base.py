@@ -39,8 +39,9 @@ def aumento_evasao (pontos, evasaobase):
 #         Extras
 # ------------------------
 
-def parar_turno(pontos):
-    return (not precisao(pontos))
+def parar_turno(pontos, alvo):
+    if precisao(10):
+        alvo['pode_agir'] = False
 
 
 
