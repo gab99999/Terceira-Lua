@@ -34,4 +34,3 @@ evasaopontual2 = 0
 print(personagem1)
 
 while vida1 > 0 and vida2 > 0:
-
