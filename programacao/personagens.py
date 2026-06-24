@@ -78,7 +78,7 @@ antonius = {
 nicholas = {
     'nome': 'Nicholas',
     "vida": 820,  
-    "evasao": 3,  
+    "evasao": 0,  
 
     "passiva": dualidade_mesclada,
 

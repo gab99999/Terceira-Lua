@@ -145,7 +145,7 @@ def dualidade_mesclada(usuario, alvo):
 
 
 def absorver_calor(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(55-alvo['evasao']), usuario):
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(75-alvo['evasao']), usuario):
         alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (70, 110))
         antonius_dano(alvo)
         usuario['frio'] = True
@@ -153,15 +153,19 @@ def absorver_calor(usuario, alvo):
 
 
 def aquecer_materia(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(55-alvo['evasao']), usuario):
-        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (70, 110))
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(75-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (60, 120))
         antonius_dano(alvo)
         usuario['quente'] = True
         dualidade_mesclada(usuario, alvo)
 
 
 def fusao_magica(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(60-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (100, 200))
+        antonius_dano(alvo)
+        b.parar_turno(alvo, usuario)
+
 
 
 # ==========================================
