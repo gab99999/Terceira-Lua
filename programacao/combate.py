@@ -13,7 +13,7 @@ Funções principais:
 from personagens import personagens as skill
 import random
 import pygame
-import fonte
+
 
 # ------------------------
 #      Base da tela

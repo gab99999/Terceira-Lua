@@ -27,8 +27,8 @@ O dano é ativado no começo de cada turno do inimigo envenenado.
 
 # Habilidades: 
 
-Reação Mágica (77) - Amara utiliza uma fórmula explosiva e mágica para atacar. Desse modo, causa 50 - 100 de dano. Além disso, possui (Precisão: 25) a chance de diminuir a evasão do inimigo em 1.
+Reação Mágica (77) - Amara utiliza uma fórmula explosiva e mágica para atacar. Desse modo, causa 50 - 100 de dano. Além disso, possui (Precisão: 25) a chance de diminuir a evasão do inimigo em 1. Aplica 2 venenos.
 
-Ondas Elevadas (86) - Amara modifica a estrutura da atmosfera em volta de seu inimigo, o envenenando com elementos químicos diversos. Desse modo, causa 55 - 90 de dano.
+Ondas Elevadas (86) - Amara modifica a estrutura da atmosfera em volta de seu inimigo, o envenenando com elementos químicos diversos. Desse modo, causa 55 - 90 de dano. Aplica 1 veneno.
 
-Cura envenenada (60) - Amara inverte os meios, transformando sofrimento alheio em sua cura. Desse modo, causa 70 - 140 de dano e se cura com base no dano máximo do nivel de veneno mágico do inimigo multiplicado por 3. Assim, retira todos os venenos do inimigo, e logo depois aplica mais 1 acúmulo (conforme a passiva).
+Cura envenenada (60) - Amara inverte os meios, transformando sofrimento alheio em sua cura. Desse modo, causa 70 - 140 de dano e se cura com base no dano máximo do nivel de veneno mágico do inimigo multiplicado por 3. Assim, retira todos os venenos do inimigo, e logo depois aplica mais 2 venenos (conforme a passiva).

@@ -28,25 +28,58 @@ def morte_lenta(usuario, alvo):
             usuario['vida'] = usuario['vida'] - b.dano(6, 12)
         case 4:
             usuario['vida'] = usuario['vida'] - b.dano(8, 16)
-        case 5:
+        case _:
             usuario['vida'] = usuario['vida'] - b.dano(10, 20)
 
+# VAI PRECISAR DE BALANCEAMENTO
 
 def reacao_magica(usuario, alvo):
     if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(77-alvo['evasao'])):
-        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano ())
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (50, 115))
+        alvo['veneno'] += 2
         if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(25-alvo['evasao'])):
             alvo['pode_agir'] = False
+        else:
+            pass
     else:
-        pass
-
+        if alvo['veneno'] > 0:
+            alvo['veneno'] -= 1
+        
 
 def ondas_elevadas(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(86-alvo['evasao'])):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (60, 100))
+        alvo['veneno'] += 1
+    else:
+        if alvo['veneno'] > 0:
+            alvo['veneno'] -= 1
+
 
 
 def cura_envenenada(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(86-alvo['evasao'])):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (80, 140))
+
+        match alvo['veneno']:
+            case 0:
+                pass
+            case 1:
+                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(7*2))
+            case 2:
+                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(10*2))
+            case 3:
+                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(12*2))
+            case 4:
+                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(16*2))
+            case _:
+                usuario['vida'] = usuario['vida'] + b.aumento_cura(usuario['cura_porcentagem'], b.cura(20*2))
+                
+        alvo['veneno'] = 0
+
+        alvo['veneno'] += 2
+    else:
+        if alvo['veneno'] > 0:
+            alvo['veneno'] -= 1
 
 
 # ==========================================
