@@ -74,7 +74,5 @@ def parar_turno(alvo, usuario):
     
     if aumento_precisao(alvo['precisao_bonus'], precisao(25-alvo['evasao'], usuario)):
             alvo['pode_agir'] = False
-    else:
-        pass
 
 

@@ -39,10 +39,7 @@ def reacao_magica(usuario, alvo):
         alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (50, 115))
         alvo['veneno'] += 2
         antonius_dano(alvo)
-        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(25-alvo['evasao'], usuario)):
-            alvo['pode_agir'] = False
-        else:
-            pass
+        b.parar_turno(alvo,usuario)
     else:
         if alvo['veneno'] > 0:
             alvo['veneno'] -= 1
@@ -128,22 +125,39 @@ def granada_de_luz(usuario, alvo):
 
 
 def tiro_certeiro(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(55-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (100, 240))
+        antonius_dano(alvo)
+
+        b.parar_turno(alvo,usuario)  
+
 
 # ==========================================
 # NICOLAS
 # ==========================================
 
 def dualidade_mesclada(usuario, alvo):
-    pass
+    if usuario['frio'] and usuario['quente']:
+        alvo['vida'] -= b.aumento_dano(alvo['dano_porcentagem'], b.dano (0, 120))
+        antonius_dano(alvo)
+        usuario['frio'] = False
+        usuario['quente'] = False
 
 
 def absorver_calor(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(55-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (70, 110))
+        antonius_dano(alvo)
+        usuario['frio'] = True
+        dualidade_mesclada(usuario, alvo)
 
 
 def aquecer_materia(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(55-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (70, 110))
+        antonius_dano(alvo)
+        usuario['quente'] = True
+        dualidade_mesclada(usuario, alvo)
 
 
 def fusao_magica(usuario, alvo):
