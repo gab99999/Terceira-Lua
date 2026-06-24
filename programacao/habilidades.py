@@ -1,3 +1,14 @@
+"""
+habilidades.py
+
+Contém todas as habilidades e passivas dos
+personagens do jogo.
+
+Cada habilidade recebe:
+    usuario (dict)
+    alvo (dict)
+"""
+
 import base as b
 import random
 

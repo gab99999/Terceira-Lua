@@ -1,36 +1,76 @@
+"""
+combate.py
+
+Responsável pelo sistema de batalha.
+
+Funções principais:
+    - Controle de turnos
+    - Aplicação de habilidades
+    - Aplicação de efeitos
+    - Verificação de vitória
+"""
+
 from personagens import personagens as skill
 import random
 
-escolha1 = 'Amara'
+# ------------------------
+#          Funções
+# ------------------------
+
+def criar_combatente(personagem):
+
+    """
+    Cria uma cópia temporária de um personagem
+    para ser utilizada durante uma batalha.
+
+    """
+    combatente = personagem.copy()
+
+    combatente["vida_maxima"] = combatente["vida"]
+
+    combatente["pode_agir"] = True
+
+    combatente["veneno"] = 0
+    combatente["cego"] = 0
+
+    combatente["precisao_bonus"] = 0
+    combatente["evasao_bonus"] = 0
+
+    combatente["dano_bonus"] = 0
+    combatente["cura_bonus"] = 0
+
+    return combatente
+
+# ------------------------
+#        Variáveis
+# ------------------------
+
+escolha1 = 'Amara' #escolha que acontece em outra área
 escolha2 = 'Perfídia'
 
-personagem1 = skill[escolha1]
-personagem2 = skill[escolha2]
+personagem1 = criar_combatente(skill[escolha1]) #personagem que vai ser utilizado
+personagem2 = criar_combatente(skill[escolha2])
 
-vida1 = personagem1['vida']
-vida2 = personagem2['vida']
+qualturno = random.choice([True, False]) #qual personagem começa
 
-evasao1 = personagem1['evasao']
-evasao2 = personagem2['evasao']
+# ------------------------
+#         Combate
+# ------------------------
 
-curaporcentagem1 = 0
-danoporcentagem1 = 0
+while personagem1['vida'] > 0 and personagem2['vida'] > 0:
+    if qualturno:
+        if personagem1['pode_agir']:
+            print(personagem1)
+    else:
+        if personagem2['pode_agir']:
+            print(personagem2)
+    if qualturno:
+        personagem1['pode_agir'] = True
+    else:
+        personagem2['pode_agir'] = True
+    qualturno = not qualturno
+    qntturno += 1
 
-curaporcentagem2 = 0
-porcentagem2 = 0
 
-curapontual1 = 0
-danopontual1 = 0
+        
 
-curapontual2 = 0
-danopontual2 = 0
-
-precisaopontual1 = 0
-evasaopontual1 = 0
-
-precisaopontual2 = 0
-evasaopontual2 = 0
-
-print(personagem1)
-
-while vida1 > 0 and vida2 > 0:
