@@ -3,7 +3,6 @@ Funções auxiliares utilizadas no combate.
 """
 
 import random
-aaaa
 
 # ------------------------
 #          Básico
