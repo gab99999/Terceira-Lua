@@ -21,6 +21,8 @@ def precisao(pontos, alvo):
     """Retorna True se o teste de precisão for bem-sucedido."""
     x = random.randint(1, 100)
 
+    print('A Lua está em: ', x)
+
     if alvo['cego'] == True:
         pontos = pontos//2
 
