@@ -123,7 +123,7 @@ raoni = {
 taina = {
     'nome': 'Tainá',
     "vida": 700,
-    "evasao": 13,
+    "evasao": 15,
 
     "passiva": dor_alimenta_os_fortes,
 
