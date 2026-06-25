@@ -46,6 +46,7 @@ def criar_combatente(personagem):
     combatente["veneno"] = 0
     combatente["cego"] = False
     combatente['resistencia'] = 0
+    combatente['plumas'] = 0
 
     combatente['frio'] = False
     combatente['quente'] = False

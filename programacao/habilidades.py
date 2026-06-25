@@ -191,11 +191,18 @@ def brutalizar_as_luas(usuario, alvo):
 # RAONI
 # ==========================================
 
-def cura_alimenta_os_fracos(usuario, alvo):
-    pass
+def cura_alimenta_os_fracos(usuario, dano):
+    b.aumento_dano_pontual(usuario['plumas'], dano)
 
 
 def foco_em_penas(usuario, alvo):
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(85-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], cura_alimenta_os_fracos(usuario, b.dano (50, 85)))
+        antonius_dano(alvo)
+        usuario['plumas'] += 4
+        usuario['vida'] += b.aumento_cura(usuario['cura_porcentagem'], b.cura(20, 40))
+        if usuario['vida']>usuario['vida_maxima']:
+            usuario['vida'] = usuario['vida_maxima']
     pass
 
 
