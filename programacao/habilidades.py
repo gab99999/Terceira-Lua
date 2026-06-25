@@ -203,15 +203,23 @@ def foco_em_penas(usuario, alvo):
         usuario['vida'] += b.aumento_cura(usuario['cura_porcentagem'], b.cura(20, 40))
         if usuario['vida']>usuario['vida_maxima']:
             usuario['vida'] = usuario['vida_maxima']
-    pass
 
 
 def especializacao_em_aves(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(85-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], cura_alimenta_os_fracos(usuario, b.dano (75, 95)))
+        antonius_dano(alvo)
+        usuario['plumas'] += 3
+        usuario['vida'] += b.aumento_cura(usuario['cura_porcentagem'], b.cura(35, 50))
+        if usuario['vida']>usuario['vida_maxima']:
+            usuario['vida'] = usuario['vida_maxima']
 
 
 def inversao_curativa(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(85-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], cura_alimenta_os_fracos(usuario, b.dano (50, 85)))
+        antonius_dano(alvo)
+        alvo['cura_porcentagem'] += (-15)
 
 
 # ==========================================
@@ -219,16 +227,35 @@ def inversao_curativa(usuario, alvo):
 # ==========================================
 
 def dor_alimenta_os_fortes(usuario, alvo):
-    pass
+    sessenta = False
+    trinta = False
+    if usuario['vida'] < usuario['vida_maxima'] * 0.6 and not sessenta:
+        usuario['dano_porcentagem'] += 40
+        sessenta = True
+    if usuario['vida'] < usuario['vida_maxima'] * 0.3 and not trinta:
+        usuario['dano_porcentagem'] += 40
+        trinta = True
 
 
 def dilaceracao_dupla(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(78-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (70, 120))
+        antonius_dano(alvo)
+        usuario['vida'] -= b.dano(30,50)
+        alvo['precisao_bonus'] -= 1
 
 
 def arremesso_de_lamina(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(78-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (70, 150))
+        antonius_dano(alvo)
+        usuario['vida'] -= b.dano(35,75)
+        if b.precisao (50, usuario):
+            usuario['evasao'] += 1
 
 
 def apunhalada_pacifica(usuario, alvo):
-    pass
+    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(50-alvo['evasao']), usuario):
+        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (125, 250))
+        antonius_dano(alvo)
+

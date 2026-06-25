@@ -15,8 +15,8 @@ Evasão - 12
 
 Dor Alimenta os Fortes - Tainá aumentará seu dano com base nas suas dores.
 
-Ao chegar aos 60% de vida, ela terá um aumento de 20% de dano em inimigos (pode mudar)
-Ao chegar aos 30% de vida, seu aumento irá para 50% (pode mudar)
+Ao chegar aos 60% de vida, ela terá um aumento de 40% de dano em inimigos (pode mudar)
+Ao chegar aos 30% de vida, seu aumento irá para 80% (pode mudar)
 
 # Habilidades:
 
