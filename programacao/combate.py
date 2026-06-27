@@ -51,6 +51,8 @@ def criar_combatente(personagem):
     combatente['frio'] = False
     combatente['quente'] = False
 
+    combatente['terceira_lua'] = False
+
     combatente["precisao_bonus"] = 0
     combatente["evasao_bonus"] = 0
 
@@ -98,6 +100,7 @@ personagem1 = criar_combatente(skill[escolha1]) #personagem que vai ser utilizad
 personagem2 = criar_combatente(skill[escolha2])
 
 qualturno = random.choice([True, False]) #qual personagem começa
+qntturno = 1 # quantidade de turnos
 
 # ------------------------
 #         Combate

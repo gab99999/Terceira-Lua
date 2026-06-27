@@ -11,9 +11,9 @@ Ao chegar:
 Possíveis efeitos (aleatório):
 
 1. Aumenta o dano 35%
-2. Aumenta a evasão em 3
+2. Aumenta a evasão em 4
 3. Aumenta a cura em 50%
-4. Aumenta a precisão de todas as habilidades e interações em 10
+4. Aumenta a precisão de todas as habilidades e interações em 8
 5. Passivas com "acúmulos" duplicam eles
 
 Caso sobre tempo -->

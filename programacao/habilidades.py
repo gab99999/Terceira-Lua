@@ -173,19 +173,59 @@ def fusao_magica(usuario, alvo):
 # ==========================================
 
 def cria_lunar(usuario, alvo):
-    pass
+    if usuario['terceira_lua']:
+        alvo['terceira_lua'] = False
+        usuario['dano_porcentagem'] += 5
+        usuario['evasao'] += 1
+        usuario['cura_porcentagem'] += 10
+        usuario['precisao_bonus'] += 2
 
 
 def invocacao_lunar(usuario, alvo):
-    pass
+    if usuario['terceira_lua']:
+        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(80-alvo['evasao']), usuario):
+            alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (90, 125))
+            antonius_dano(alvo)
+            usuario['vida'] += b.aumento_cura(usuario['cura_porcentagem'], b.cura(25, 60))
+            if usuario['vida']>usuario['vida_maxima']:
+                usuario['vida'] = usuario['vida_maxima']
+    else:
+        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(90-alvo['evasao']), usuario):
+            alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (50, 75))
+            antonius_dano(alvo)
+            # DIMINUIR EM 1 TURNO A CHEGADA DA TERCEIRA LUA
 
 
 def pluralidade_estelar(usuario, alvo):
-    pass
+    if usuario['terceira_lua']:
+        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(70-alvo['evasao']), usuario):
+            alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (100, 140))
+            antonius_dano(alvo)
+            usuario['vida'] += b.aumento_cura(usuario['cura_porcentagem'], b.cura(10, 50))
+            if usuario['vida']>usuario['vida_maxima']:
+                usuario['vida'] = usuario['vida_maxima']
+    else:
+        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(75-alvo['evasao']), usuario):
+            alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (55, 85))
+            antonius_dano(alvo)
+            usuario['vida'] += b.aumento_cura(usuario['cura_porcentagem'], b.cura(30, 50))
+            if usuario['vida']>usuario['vida_maxima']:
+                usuario['vida'] = usuario['vida_maxima']
+
+    
 
 
 def brutalizar_as_luas(usuario, alvo):
-    pass
+    if usuario['terceira_lua']:
+        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(70-alvo['evasao']), usuario):
+            alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (85, 115))
+            antonius_dano(alvo)
+            b.parar_turno(alvo, usuario)
+    else:
+        if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(85-alvo['evasao']), usuario):
+            alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (30, 60))
+            antonius_dano(alvo)
+            # DIMINUIR EM 1 A 2 TURNOS (ALEATORIO) A CHEGADA DA TERCEIRA LUA
 
 # ==========================================
 # RAONI
