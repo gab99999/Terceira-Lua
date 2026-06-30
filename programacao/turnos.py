@@ -1,5 +1,5 @@
 import random
-from personagens import amara, antonius, nicholas
+from personagens import personagens
 
 class Personagem:
     def __init__(self, nome, hp, ataque):
