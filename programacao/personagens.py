@@ -8,7 +8,7 @@ Cada personagem é armazenado em um dicionário
 com seus atributos básicos, passiva e habilidades.
 """
 
-import base as b
+import base as b 
 import random
 
 from habilidades import (
