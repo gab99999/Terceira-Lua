@@ -53,7 +53,7 @@ class GerenciadorBatalha:
     def executar_turno_bot(self):
         """Chama a lógica da IA (que eu vou desenvolver depois)."""
         # Exemplo simples temporário: o bot sempre usa a habilidade 1
-        habilidade_escolhida = "habilidade_basica" 
+        habilidade_escolhida = "habilidade1" 
         
         # Avançando para processar a ação do bot
         self.processar_acao(temporario_autor="Bot", habilidade=habilidade_escolhida)
@@ -119,9 +119,9 @@ jogador = {
     "vida_atual": 100,
     # Cooldowns: quantas rodadas faltam para poder usar a habilidade de novo
     "cooldowns": {
-        "habilidade_basica": 0,
-        "habilidade_tematica": 2, # Faltam 2 turnos para poder usar
-        "ultimate": 0             # Pronto para usar!
+        "habilidade1": 0,
+        "habilidade2": 2, # Faltam 2 turnos para poder usar
+        "habilidade3": 0             # Pronto para usar!
     },
     # Efeitos ativos no personagem neste exato momento
     "efeitos_ativos": [
