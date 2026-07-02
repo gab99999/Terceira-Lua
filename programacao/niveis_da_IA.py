@@ -12,7 +12,7 @@ def executar_turno_bot(self):
     
     # 1. Descobre o que o bot pode usar neste turno
     opcoes = self.obter_habilidades_disponiveis(self.bot)
-    habilidade_escolhida = "habilidade_basica" # Padrão de segurança caso algo dê errado
+    habilidade_escolhida = "habilidade1" # Padrão de segurança caso algo dê errado
     
     # 2. Define o comportamento baseado na dificuldade do Bot atual
     dificuldade = self.bot.get("dificuldade", "FÁCIL")
@@ -24,12 +24,12 @@ def executar_turno_bot(self):
         
     elif dificuldade == "MÉDIA":
         # IA Baseada em Regras Simples: Usa a melhor habilidade se puder.
-        if "habilidade_ultimate" in opcoes:
-            habilidade_escolhida = "habilidade_ultimate"
-        elif "habilidade_tematica" in opcoes:
-            habilidade_escolhida = "habilidade_tematica"
+        if "habilidade3" in opcoes:
+            habilidade_escolhida = "habilidade3"
+        elif "habilidade2" in opcoes:
+            habilidade_escolhida = "habilidade2"
         else:
-            habilidade_escolhida = "habilidade_basica"
+            habilidade_escolhida = "habilidade1"
             
     elif dificuldade == "DIFÍCIL":
         # IA Inteligente: Olha para o próprio status e o do jogador antes de agir.
