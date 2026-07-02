@@ -133,7 +133,7 @@ def tiro_certeiro(usuario, alvo):
 
 
 # ==========================================
-# NICOLAS
+# NICHOLAS
 # ==========================================
 
 def dualidade_mesclada(usuario, alvo):

@@ -1,5 +1,7 @@
 import random
 from personagens import personagens
+import IA_dos_bots
+import IA_chefao
 
 class Personagem:
     def __init__(self, nome, hp, ataque):
@@ -21,11 +23,15 @@ class Personagem:
 
 #Aguardando a integração com IA para o INIMIGO
 class Inimigo:
-    def __init__(self, nome, hp, ataque):
+    def inimigo(self, nome, hp, ataque):
         self.nome = nome
         self.hp = hp
         self.ataque = ataque
         self.vivo = True
+    
+    IA_dos_bots
+    IA_chefao
+    
 
 # Configuração inicial ainda será alterada
 player = Personagem("Jogador", 100, 10)
