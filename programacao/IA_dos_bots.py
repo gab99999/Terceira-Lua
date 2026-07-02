@@ -15,15 +15,15 @@ def obter_habilidades_disponiveis(self, bot):
     disponiveis = []
     
     # Se o cooldown for 0, a habilidade básica está pronta
-    if bot["cooldowns"]["habilidade_basica"] == 0:
-        disponiveis.append("habilidade_basica")
+    if bot["cooldowns"]["habilidade1"] == 0:
+        disponiveis.append("habilidade1")
         
     # Checa a temática
-    if bot["cooldowns"]["habilidade_tematica"] == 0:
-        disponiveis.append("habilidade_tematica")
+    if bot["cooldowns"]["habilidade2"] == 0:
+        disponiveis.append("habilidade2")
         
     # Checa a ultimate (especial)
-    if bot["cooldowns"]["habilidade_ultimate"] == 0:
-        disponiveis.append("habilidade_ultimate")
+    if bot["cooldowns"]["habilidade3"] == 0:
+        disponiveis.append("habilidade3")
         
     return disponiveis
