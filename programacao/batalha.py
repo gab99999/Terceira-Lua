@@ -10,7 +10,7 @@ class EstadoBatalha(Enum):
     INICIO_BATALHA = auto()      # Carrega personagens, aplica passivas iniciais
     TURNO_JOGADOR = auto()       # Aguarda o input da interface 
     TURNO_BOT = auto()           # Momento em que a IA decide a ação
-    PROCESSANDO_ACAO = auto()    # Calcula dano/efeitos e atualiza cooldowns
+    PROCESSANDO_ACAO = auto()    # Calcula dano/efeitos 
     FIM_BATALHA = auto()         # Alguém morreu, define vitória/derrota e avança campanha
 
 # ==================================================
@@ -105,98 +105,3 @@ class GerenciadorBatalha:
             # TODO: Avançar a campanha (minha responsabilidade) e chamar tela de vitória do Luiz
 
 
-# ==============================================================================================================================
-#                                    GERENCIAMENTO DOS COOLDOWNS E OS EFEITOS
-# ==============================================================================================================================
-''' Essa parte vai controlar o tempo  no jogo. A regra  principal 
-é que o tempo só passa quando o turno muda, então vou decrementar
-esses contadores em momento bem específico do fluxo. '''
-# ==============================================
-#        ETRUTURA DE COOLDOWNS E EFEITOS
-# ==============================================
-jogador = {
-    "nome": "Pyro",
-    "vida_atual": 100,
-    # Cooldowns: quantas rodadas faltam para poder usar a habilidade de novo
-    "cooldowns": {
-        "habilidade1": 0,
-        "habilidade2": 2, # Faltam 2 turnos para poder usar
-        "habilidade3": 0             # Pronto para usar!
-    },
-    # Efeitos ativos no personagem neste exato momento
-    "efeitos_ativos": [
-        {"nome": "envenenamento", "duracao": 3, "valor": 5}, # Dura 3 turnos, tira 5 de vida por turno
-        {"nome": "escudo", "duracao": 1, "valor": 20}        # Dura 1 turno, absorve 20 de dano
-    ]
-}
-# Estrutura com esboço de personagem para o Gabriel formatar com as informaçôes dos personagens originais !!!
-
-# ===============================================
-#      2- ATUALIZAR NO CONTADOR DE BATALHA 
-# ===============================================
-''' O melhor momento para atualizar os contadores de um personagem é 
-no inicio do turno dele, logo antes de ele escolher a ação.
-   Vou usar a antiga função " passar_turno " e criar duas funções 
-auxiliares: atualizar_cooldowns e processar_efeitos. '''
-
-def passar_turno(self):
-        """Alterna quem joga, avança o contador e atualiza os status do próximo a jogar."""
-        if self.quem_joga == "Jogador":
-            self.quem_joga = "Bot"
-            self.estado_atual = EstadoBatalha.TURNO_BOT
-            # O turno agora é do Bot. Vamos atualizar as coisas dele antes de ele agir.
-            self.atualizar_status_personagem(self.bot)
-        else:
-            self.quem_joga = "Jogador"
-            self.estado_atual = EstadoBatalha.TURNO_JOGADOR
-            self.turno_atual += 1
-            # O turno voltou para o Jogador. Vamos atualizar as coisas dele.
-            self.atualizar_status_personagem(self.jogador)
-            
-        self.atualizar_loop()
-
-def atualizar_status_personagem(self, personagem):
-    """Reúne as atualizações de tempo que acontecem no início do turno do personagem."""
-    print(f"\n--- Atualizando status de: {personagem['nome']} ---")
-    self.processar_efeitos(personagem)
-    self.atualizar_cooldowns(personagem)
-
-def atualizar_cooldowns(self, personagem):
-    """Diminui o tempo de recarga de todas as habilidades que estão em cooldown."""
-    for habilidade, tempo_restante in personagem["cooldowns"].items():
-        if tempo_restante > 0:
-            personagem["cooldowns"][habilidade] -= 1
-            if personagem["cooldowns"][habilidade] == 0:
-                print(f"✨ A habilidade [{habilidade}] de {personagem['nome']} está pronta para uso novamente!")
-
-def processar_efeitos(self, personagem):
-    """Aplica os efeitos temporários (como dano de veneno) e reduz a duração deles."""
-    # Usamos uma lista nova para manter apenas os efeitos que não expiraram
-    efeitos_restantes = []
-
-    for efeito in personagem["efeitos_ativos"]:
-        # 1. Aplica o efeito dependendo do tipo
-        if efeito["nome"] == "envenenamento":
-            personagem["vida_atual"] -= efeito["valor"]
-            print(f"🤢 {personagem['nome']} sofreu {efeito['valor']} de dano por Veneno! (Vida: {personagem['vida_atual']})")
-            
-        elif efeito["nome"] == "escudo":
-            print(f"🛡️ {personagem['nome']} está protegido por um escudo de {efeito['valor']} pontos.")
-
-        # 2. Diminui a duração do efeito
-        efeito["duracao"] -= 1
-
-        # 3. Se a duração ainda for maior que zero, o efeito continua para o próximo turno
-        if efeito["duracao"] > 0:
-                efeitos_restantes = efeito
-        else:
-            print(f"⏳ O efeito [{efeito['nome']}] em {personagem['nome']} acabou.")
-
-    # Atualiza a lista do personagem apenas com os efeitos que ainda estão ativos
-    personagem["efeitos_ativos"] = efeitos_restantes
-
-''' Novamente, é apenas um esboço, não é definitivo. Também, em relação a saída,
-pelo fato de ter muitos personagens, eu usei (mas não apliquei ainda) IA para me
-ajudar com um print genérico (string formatadas). '''
-
-    
