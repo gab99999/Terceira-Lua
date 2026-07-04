@@ -20,18 +20,26 @@ clock = pygame.time.Clock()
 
 
 # Imagens
-logo = pygame.image.load(r"")
-
 background = pygame.image.load(r"programacao\interface\assets\background.png").convert()
+
+logo = pygame.image.load(r"programacao\interface\terceira lua png.png").convert_alpha()
+
+logo = pygame.transform.scale(
+    logo,
+    (logo.get_width() * 0.6, logo.get_height() * 0.6)
+)
+
+logo_rect = logo.get_rect(center=(WIDTH / 2, (HEIGHT / 2) + -150))
 
 painel = pygame.image.load(r"programacao\interface\assets\ai-made\menu_frame.png").convert_alpha()
 
+# Aumenta resolução
 painel = pygame.transform.scale(
     painel,
     (painel.get_width() * 2.5, painel.get_height() * 2.5)
 )
 
-painel_rect = painel.get_rect(center=(WIDTH / 2, (HEIGHT / 2) + 100))
+painel_rect = painel.get_rect(center=(WIDTH / 2, (HEIGHT / 2) + 150))
 
 botao_jogar = pygame.image.load(r"programacao\interface\assets\ai-made\jogar_button.png").convert_alpha()
 
@@ -78,6 +86,9 @@ while running:
 
     # Desenha o fundo
     screen.blit(background, (0, 0))
+
+    # Desenha a logo
+    screen.blit(logo, logo_rect)
 
     # Desenha o painel
     screen.blit(painel, painel_rect)

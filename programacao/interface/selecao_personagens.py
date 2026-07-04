@@ -17,9 +17,13 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     
-    frame_selecao_rect = pygame.Rect(100, 50, 100, 100)
+    frame_selecao_rect = pygame.Rect(100, 120, 250, 500)
     frame_selecao_surface = pygame.Surface(frame_selecao_rect.size, pygame.SRCALPHA)
     frame_selecao_surface.fill(CINZA)
+
+    frame_descricao_rect = pygame.Rect(920, 120, 250, 500)
+    frame_descricao_surface = pygame.Surface(frame_descricao_rect.size, pygame.SRCALPHA)
+    frame_descricao_surface.fill(CINZA)
     
     background = pygame.image.load(r"programacao\interface\assets\background_selecao_personagens.png").convert()
 
@@ -37,6 +41,7 @@ def main():
 
         screen.blit(frame_selecao_surface, frame_selecao_rect.topleft)
 
+        screen.blit(frame_descricao_surface, frame_descricao_rect.topleft)
 
         pygame.display.flip()
 
