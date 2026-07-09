@@ -11,9 +11,8 @@ Funções principais:
 """
 
 from personagens import personagens as skill
-import random
 import pygame
-
+from turnos import SistemaTurnos
 
 # ------------------------
 #      Base da tela
@@ -93,78 +92,82 @@ tela.blit(textointeracao, (830,520))
 #        Variáveis
 # ------------------------
 
-escolha1 = 'Amara' #escolha que acontece em outra área
+escolha1 = 'Amara'
 escolha2 = 'Perfídia'
 
-personagem1 = criar_combatente(skill[escolha1]) #personagem que vai ser utilizado
+personagem1 = criar_combatente(skill[escolha1])
 personagem2 = criar_combatente(skill[escolha2])
 
-qualturno = random.choice([True, False]) #qual personagem começa
-qntturno = 1 # quantidade de turnos
+turnos = SistemaTurnos(personagem1, personagem2)
+
+qntturno = 1
 
 # ------------------------
 #         Combate
 # ------------------------
 
-while personagem1['vida'] > 0 and personagem2['vida'] > 0:
-    for evento in pygame.event.get(): # ler o que o mouse faz
-        if qualturno: #dizer quem vai agir
-            if personagem1['pode_agir']:
-                jogador = personagem1
-                alvo = personagem2
-        else:
-            if personagem2['pode_agir']:
-                jogador = personagem2
-                alvo = personagem1
+while not turnos.combate_acabou():
 
-        # botoes sendo clicados
+    for evento in pygame.event.get():
+
+        if evento.type == pygame.QUIT:
+            pygame.quit()
+            exit()
 
         if evento.type == pygame.MOUSEBUTTONDOWN:
+
+            jogador = turnos.jogador_atual()
+            alvo = turnos.alvo_atual()
+
             mouse = pygame.mouse.get_pos()
+
             if botao1.collidepoint(mouse):
                 jogador["habilidade_1"](jogador, alvo)
-            if botao2.collidepoint(mouse):
+
+            elif botao2.collidepoint(mouse):
                 jogador["habilidade_2"](jogador, alvo)
-            if botao3.collidepoint(mouse):
+
+            elif botao3.collidepoint(mouse):
                 jogador["habilidade_3"](jogador, alvo)
-            if botaointeracao.collidepoint(mouse):
+
+            elif botaointeracao.collidepoint(mouse):
                 jogador["interações"](jogador, alvo)
-        
-        # preparo para o próximo turno
 
-        if qualturno:
-            personagem1['pode_agir'] = True
-        else:
-            personagem2['pode_agir'] = True
-        if jogador['cego']:
-            jogador['cego'] = False
-        qualturno = not qualturno
-        qntturno += 1
+            jogador["pode_agir"] = True
 
-        #### redesenhar os graficos e botões
+            if jogador["cego"]:
+                jogador["cego"] = False
 
-        botao1 = pygame.Rect(100, 500, 200, 80)  #criação de um retangulo imaginário
-        botao2 = pygame.Rect(300, 500, 200, 80)
-        botao3 = pygame.Rect(550, 500, 200, 80)
-        botaointeracao = pygame.Rect(800, 500, 250, 80)
+            turnos.proximo_turno()
+
+            qntturno += 1
+
+    #### redesenhar os graficos e botões
+    tela.fill((0,0,0))
+
+    botao1 = pygame.Rect(100, 500, 200, 80)  #criação de um retangulo imaginário
+    botao2 = pygame.Rect(300, 500, 200, 80)
+    botao3 = pygame.Rect(550, 500, 200, 80)
+    botaointeracao = pygame.Rect(800, 500, 250, 80)
 
 
-        pygame.draw.rect(tela, (255, 255, 255) , botao1) #desenho desse retangulo
-        pygame.draw.rect(tela, (255, 255, 255) , botao2)
-        pygame.draw.rect(tela, (255, 255, 255) , botao3)
-        pygame.draw.rect(tela, (255, 255, 255) , botaointeracao)
+    pygame.draw.rect(tela, (255, 255, 255) , botao1) #desenho desse retangulo
+    pygame.draw.rect(tela, (255, 255, 255) , botao2)
+    pygame.draw.rect(tela, (255, 255, 255) , botao3)
+    pygame.draw.rect(tela, (255, 255, 255) , botaointeracao)
 
-        texto1 = fonte.render("Habilidade 1", True, (0, 0, 0)) #criação de um texto
-        texto2 = fonte.render("Habilidade 2", True, (0, 0, 0))
-        texto3 = fonte.render("Habilidade 3", True, (0, 0, 0))
-        textointeracao = fonte.render("Interações", True, (0, 0, 0))
+    texto1 = fonte.render("Habilidade 1", True, (0, 0, 0)) #criação de um texto
+    texto2 = fonte.render("Habilidade 2", True, (0, 0, 0))
+    texto3 = fonte.render("Habilidade 3", True, (0, 0, 0))
+    textointeracao = fonte.render("Interações", True, (0, 0, 0))
 
-        tela.blit(texto1, (110,520)) #aplicação desse texto
-        tela.blit(texto2, (330,520))
-        tela.blit(texto3, (580,520))
-        tela.blit(textointeracao, (830,520))
+    tela.blit(texto1, (110,520)) #aplicação desse texto
+    tela.blit(texto2, (330,520))
+    tela.blit(texto3, (580,520))
+    tela.blit(textointeracao, (830,520))
 
-        pygame.display.flip()
+    pygame.display.flip()
+
 
 
 
