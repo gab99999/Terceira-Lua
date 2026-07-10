@@ -135,6 +135,7 @@ taina = {
 personagens = {
     "Amara": amara,
     "Antonius": antonius,
+    "Nicholas": nicholas,
     "Perfídia": perfidia,
     "Raoni": raoni,
     "Tainá": taina

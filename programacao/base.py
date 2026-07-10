@@ -1,47 +1,44 @@
 """
-Funções auxiliares utilizadas no combate.
+Funcoes auxiliares utilizadas no combate.
 """
 
 import random
 
 # ------------------------
-#          Básico
+#          Basico
 # ------------------------
 
 def dano(minimo, maximo):
-    """Retorna um dano aleatório."""
+    """Retorna um dano aleatorio."""
     return random.randint(minimo, maximo)
 
 
 def cura(minimo, maximo):
-    """Retorna uma cura aleatória."""
+    """Retorna uma cura aleatoria."""
     return random.randint(minimo, maximo)
 
 
 def precisao(chance, usuario):
     """
-    Realiza um teste de precisão.
-    Leva em consideração a cegueira e o bônus de precisão.
+    Realiza um teste de precisao.
+    Leva em consideracao a cegueira e o bonus de precisao.
     """
 
-    # Aplica bônus de precisão
-    chance += usuario["precisao_bonus"]
+    chance += usuario.get("precisao_bonus", 0)
 
-    # Se estiver cego, a precisão é reduzida pela metade
-    if usuario["cego"]:
+    if usuario.get("cego", False):
         chance //= 2
 
-    # Limita a chance entre 0 e 100
     chance = max(0, min(100, chance))
 
     lua = random.randint(1, 100)
-    print(f"A Lua está em: {lua}")
+    print(f"A Lua esta em: {lua}")
 
     return lua <= chance
 
 
 # ------------------------
-#   Aumento e Diminuição
+#   Aumento e diminuicao
 # ------------------------
 
 def aumento_dano(porcentagem, dano_base):
@@ -50,7 +47,7 @@ def aumento_dano(porcentagem, dano_base):
 
 
 def aumento_cura(porcentagem, cura_base):
-    """Aplica aumento percentual à cura."""
+    """Aplica aumento percentual a cura."""
     return cura_base * (1 + porcentagem)
 
 
@@ -60,17 +57,17 @@ def aumento_dano_pontual(pontos, dano_base):
 
 
 def aumento_cura_pontual(pontos, cura_base):
-    """Aplica aumento fixo à cura."""
+    """Aplica aumento fixo a cura."""
     return cura_base + pontos
 
 
 def aumento_precisao(pontos, precisao_base):
-    """Retorna uma precisão com bônus."""
+    """Retorna uma precisao com bonus."""
     return precisao_base + pontos
 
 
 def aumento_evasao(pontos, evasao_base):
-    """Retorna uma evasão com bônus."""
+    """Retorna uma evasao com bonus."""
     return evasao_base + pontos
 
 
@@ -80,17 +77,20 @@ def aumento_evasao(pontos, evasao_base):
 
 def parar_turno(alvo, usuario, chance):
     """
-    Impede o alvo de agir caso o teste de precisão seja bem-sucedido.
+    Impede o alvo de agir caso o teste de precisao seja bem-sucedido.
     """
 
-    if precisao(chance - alvo["evasao"], usuario):
+    if precisao(chance - alvo.get("evasao", 0), usuario):
         alvo["pode_agir"] = False
 
-def limitar_vida(personagem):
-    """Impede que a vida ultrapasse o máximo."""
 
-    if personagem["vida"] > personagem["vida_maxima"]:
-        personagem["vida"] = personagem["vida_maxima"]
+def limitar_vida(personagem):
+    """Impede que a vida fique abaixo de 0 ou acima do maximo."""
+
+    vida_maxima = personagem.get("vida_maxima", personagem["vida"])
+
+    if personagem["vida"] > vida_maxima:
+        personagem["vida"] = vida_maxima
 
     if personagem["vida"] < 0:
         personagem["vida"] = 0

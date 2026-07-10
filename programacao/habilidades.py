@@ -284,24 +284,25 @@ def invocacao_lunar(usuario, alvo):
     if usuario['terceira_lua']:
 
         precisao = 80
-        dano = b.dano(90,120)
+        dano = b.dano(90, 120)
 
     else:
 
         precisao = 90
-        dano = b.dano(55,75)
+        dano = b.dano(55, 75)
 
-    if b.precisao(precisao-alvo['evasao'], usuario):
+    if b.precisao(precisao - alvo['evasao'], usuario):
 
         dano = b.aumento_dano(usuario['dano_porcentagem'], dano)
 
         alvo['vida'] -= dano
 
         antonius_dano(alvo)
+        b.limitar_vida(alvo)
 
         if usuario['terceira_lua']:
 
-            cura = b.cura(45,60)
+            cura = b.cura(45, 60)
             cura = b.aumento_cura(usuario['cura_porcentagem'], cura)
 
             usuario['vida'] += cura
@@ -319,22 +320,23 @@ def pluralidade_estelar(usuario, alvo):
     if usuario['terceira_lua']:
 
         precisao = 75
-        dano = b.dano(110,140)
-        cura = b.cura(40,55)
+        dano = b.dano(110, 140)
+        cura = b.cura(40, 55)
 
     else:
 
         precisao = 75
-        dano = b.dano(55,85)
-        cura = b.cura(30,50)
+        dano = b.dano(55, 85)
+        cura = b.cura(30, 50)
 
-    if b.precisao(precisao-alvo['evasao'], usuario):
+    if b.precisao(precisao - alvo['evasao'], usuario):
 
         dano = b.aumento_dano(usuario['dano_porcentagem'], dano)
 
         alvo['vida'] -= dano
 
         antonius_dano(alvo)
+        b.limitar_vida(alvo)
 
         cura = b.aumento_cura(usuario['cura_porcentagem'], cura)
 
@@ -349,24 +351,26 @@ def brutalizar_as_luas(usuario, alvo):
     if usuario['terceira_lua']:
 
         precisao = 85
-        dano = b.dano(85,110)
+        dano = b.dano(85, 110)
 
     else:
 
         precisao = 85
-        dano = b.dano(30,60)
+        dano = b.dano(30, 60)
 
-    if b.precisao(precisao-alvo['evasao'], usuario):
+    if b.precisao(precisao - alvo['evasao'], usuario):
 
         dano = b.aumento_dano(usuario['dano_porcentagem'], dano)
 
         alvo['vida'] -= dano
 
         antonius_dano(alvo)
+        b.limitar_vida(alvo)
 
         if usuario['terceira_lua']:
 
-            b.parar_turno(alvo, usuario, 25)
+            if random.randint(1, 100) <= 25:
+                alvo['pode_agir'] = False
 
         else:
 
@@ -379,34 +383,67 @@ def brutalizar_as_luas(usuario, alvo):
 
 # Aumenta o dano conforme as plumas acumuladas.
 def cura_alimenta_os_fracos(usuario, dano):
-    b.aumento_dano_pontual(usuario['plumas'], dano)
+    if not isinstance(dano, (int, float)):
+        return 0
+
+    return b.aumento_dano_pontual(usuario['plumas'], dano)
 
 # Habilidade 1
 def foco_em_penas(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(85-alvo['evasao']), usuario):
-        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], cura_alimenta_os_fracos(usuario, b.dano (50, 85)))
+    if b.precisao(85 - alvo['evasao'], usuario):
+
+        dano = b.dano(50, 85)
+        dano = cura_alimenta_os_fracos(usuario, dano)
+        dano = b.aumento_dano(usuario['dano_porcentagem'], dano)
+
+        alvo['vida'] -= dano
+
         antonius_dano(alvo)
+        b.limitar_vida(alvo)
+
         usuario['plumas'] += 4
-        usuario['vida'] += b.aumento_cura(usuario['cura_porcentagem'], b.cura(20, 40))
-        if usuario['vida']>usuario['vida_maxima']:
-            usuario['vida'] = usuario['vida_maxima']
+
+        cura = b.cura(20, 40)
+        cura = b.aumento_cura(usuario['cura_porcentagem'], cura)
+
+        usuario['vida'] += cura
+        b.limitar_vida(usuario)
 
 # Habilidade 2
 def especializacao_em_aves(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(85-alvo['evasao']), usuario):
-        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], cura_alimenta_os_fracos(usuario, b.dano (75, 95)))
+    if b.precisao(85 - alvo['evasao'], usuario):
+
+        dano = b.dano(75, 95)
+        dano = cura_alimenta_os_fracos(usuario, dano)
+        dano = b.aumento_dano(usuario['dano_porcentagem'], dano)
+
+        alvo['vida'] -= dano
+
         antonius_dano(alvo)
+        b.limitar_vida(alvo)
+
         usuario['plumas'] += 3
-        usuario['vida'] += b.aumento_cura(usuario['cura_porcentagem'], b.cura(35, 50))
-        if usuario['vida']>usuario['vida_maxima']:
-            usuario['vida'] = usuario['vida_maxima']
+
+        cura = b.cura(35, 50)
+        cura = b.aumento_cura(usuario['cura_porcentagem'], cura)
+
+        usuario['vida'] += cura
+        b.limitar_vida(usuario)
 
 # Habilidade 3
 def inversao_curativa(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(85-alvo['evasao']), usuario):
-        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], cura_alimenta_os_fracos(usuario, b.dano (50, 85)))
+    if b.precisao(85 - alvo['evasao'], usuario):
+
+        dano = b.dano(50, 85)
+        dano = cura_alimenta_os_fracos(usuario, dano)
+        dano = b.aumento_dano(usuario['dano_porcentagem'], dano)
+
+        alvo['vida'] -= dano
+
         antonius_dano(alvo)
-        alvo['cura_porcentagem'] += (-15)
+        b.limitar_vida(alvo)
+
+        alvo['cura_porcentagem'] -= 0.15
 
 
 # ==========================================
@@ -415,35 +452,58 @@ def inversao_curativa(usuario, alvo):
 
 # Aumenta o dano conforme a vida diminui.
 def dor_alimenta_os_fortes(usuario, alvo):
-    sessenta = False
-    trinta = False
-    if usuario['vida'] < usuario['vida_maxima'] * 0.6 and not sessenta:
-        usuario['dano_porcentagem'] += 40
-        sessenta = True
-    if usuario['vida'] < usuario['vida_maxima'] * 0.3 and not trinta:
-        usuario['dano_porcentagem'] += 40
-        trinta = True
+    if usuario['vida'] < usuario['vida_maxima'] * 0.6 and not usuario.get('bonus_60_vida'):
+        usuario['dano_porcentagem'] += 0.40
+        usuario['bonus_60_vida'] = True
+
+    if usuario['vida'] < usuario['vida_maxima'] * 0.3 and not usuario.get('bonus_30_vida'):
+        usuario['dano_porcentagem'] += 0.40
+        usuario['bonus_30_vida'] = True
 
 # Habilidade 1
 def dilaceracao_dupla(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(78-alvo['evasao']), usuario):
-        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (70, 120))
+    if b.precisao(78 - alvo['evasao'], usuario):
+
+        dano = b.dano(70, 120)
+        dano = b.aumento_dano(usuario['dano_porcentagem'], dano)
+
+        alvo['vida'] -= dano
+
         antonius_dano(alvo)
-        usuario['vida'] -= b.dano(30,50)
+        b.limitar_vida(alvo)
+
+        usuario['vida'] -= b.dano(30, 50)
+        b.limitar_vida(usuario)
+
         alvo['precisao_bonus'] -= 1
 
 # Habilidade 2
 def arremesso_de_lamina(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(78-alvo['evasao']), usuario):
-        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (70, 150))
+    if b.precisao(78 - alvo['evasao'], usuario):
+
+        dano = b.dano(70, 150)
+        dano = b.aumento_dano(usuario['dano_porcentagem'], dano)
+
+        alvo['vida'] -= dano
+
         antonius_dano(alvo)
-        usuario['vida'] -= b.dano(35,75)
-        if b.precisao (50, usuario):
+        b.limitar_vida(alvo)
+
+        usuario['vida'] -= b.dano(35, 75)
+        b.limitar_vida(usuario)
+
+        if random.randint(1, 100) <= 50:
             usuario['evasao'] += 1
 
 # Habilidade 3
 def apunhalada_pacifica(usuario, alvo):
-    if b.aumento_precisao(alvo['precisao_bonus'], b.precisao(50-alvo['evasao']), usuario):
-        alvo['vida'] = alvo['vida'] - b.aumento_dano(alvo['dano_porcentagem'], b.dano (125, 250))
+    if b.precisao(50 - alvo['evasao'], usuario):
+
+        dano = b.dano(125, 250)
+        dano = b.aumento_dano(usuario['dano_porcentagem'], dano)
+
+        alvo['vida'] -= dano
+
         antonius_dano(alvo)
+        b.limitar_vida(alvo)
 
