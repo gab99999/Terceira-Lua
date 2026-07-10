@@ -58,8 +58,8 @@ class SistemaTurnos:
         return self.combatentes[1]
 
 # Configuração inicial ainda será alterada
-player = Personagem("Jogador", 100, 10)
-inimigo = Inimigo("Demônio", 50, 5)
+player = Personagem()
+inimigo = Inimigo()
 combatentes = [player, inimigo]
 turno = 0
 
