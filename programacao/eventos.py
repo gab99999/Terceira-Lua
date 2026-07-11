@@ -2,7 +2,7 @@ import random
 
 
 def aplicar_evento_terceira_lua(usuario, alvo, evento):
-    """Aplica um dos efeitos aleatorios da Terceira Lua."""
+    # Aplica um dos efeitos aleatorios da Terceira Lua
 
     match evento:
         case 1:
@@ -20,7 +20,7 @@ def aplicar_evento_terceira_lua(usuario, alvo, evento):
 
 
 def terceira_lua(personagem1, personagem2):
-    """Sorteia e aplica o evento da Terceira Lua aos personagens ativos."""
+    # Sorteia e aplica o evento da Terceira Lua aos personagens ativos
 
     evento = random.randint(1, 5)
 
@@ -32,6 +32,6 @@ def terceira_lua(personagem1, personagem2):
 
 
 def TerceiraLua(personagem1, personagem2):
-    """Mantem compatibilidade com o nome antigo da funcao."""
+    # Aplicar a terceira lua final
 
     terceira_lua(personagem1, personagem2)
