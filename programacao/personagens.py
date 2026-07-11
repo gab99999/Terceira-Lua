@@ -55,7 +55,10 @@ amara = {
 
     "habilidade_1": reacao_magica,
     "habilidade_2": ondas_elevadas,
-    "habilidade_3": cura_envenenada
+    "habilidade_3": cura_envenenada,
+
+    "historia": "Uma química renomada, Amara proporciona a mistura da ciência e magia. Ela modifica seus estudos químicos para criar magia. É secretamente apaixonada por Tainá. Faz piadas sem graça sobre químicos e magia. Time dos Lunaristas.",
+    "tom": "inteligentemente irritante"
 }
 
 
@@ -70,7 +73,10 @@ antonius = {
 
     "habilidade_1": soco_tatico,
     "habilidade_2": granada_de_luz,
-    "habilidade_3": tiro_certeiro
+    "habilidade_3": tiro_certeiro,
+
+    "historia": "Ex-militar, Antonius tem o treinamento especializado foi treinado para todas as situações de combate, até a chegada da Segunda Lua mudar isso. Ele sente muito rancor da magia e seus usuários. Time dos praguistas",
+    "tom": "disciplinado"
 }
 
 # Nicholas
@@ -84,7 +90,10 @@ nicholas = {
 
     "habilidade_1": absorver_calor,
     "habilidade_2": aquecer_materia,
-    "habilidade_3": fusao_magica
+    "habilidade_3": fusao_magica,
+
+    "historia": "Estudou com Perfídia, mas agora pensa que a magia é uma droga viciante se usada de maneira errada. Utiliza magia mesmo sendo contra ela. Time dos praguistas",
+    "tom": "arrogante"
 }
 
 
@@ -99,7 +108,10 @@ perfidia = {
 
     "habilidade_1": invocacao_lunar,
     "habilidade_2": pluralidade_estelar,
-    "habilidade_3": brutalizar_as_luas
+    "habilidade_3": brutalizar_as_luas,
+
+    "historia": "Uma das mais famosas ativistas Lunaristas, Perfídia usa magia pura da luz das Luas. Ela acredita fielmente que é filha das luas. Time dos lunaristas",
+    "tom": "irritantemente simpática"
 }
 
 
@@ -114,7 +126,10 @@ raoni = {
 
     "habilidade_1": foco_em_penas,
     "habilidade_2": especializacao_em_aves,
-    "habilidade_3": inversao_curativa
+    "habilidade_3": inversao_curativa,
+
+    "historia": "Irmão de Tainá, ele afirma que a magia reviveu sua cultura e vai curar o planeta. Utiliza de pássaros para suas magias. Sua mãe tentou conduzir um ritual com magia e morreu. Time dos lunaristas",
+    "tom": "gentil mas raivoso ao mesmo tempo"
 }
 
 
@@ -129,7 +144,10 @@ taina = {
 
     "habilidade_1": dilaceracao_dupla,
     "habilidade_2": arremesso_de_lamina,
-    "habilidade_3": apunhalada_pacifica
+    "habilidade_3": apunhalada_pacifica,
+
+    "historia": "Irmã de Raoni, ela afirma que a magia assassinou a sua mãe. Utiliza de adagas para eliminar seus inimigos. Sua mãe tentou conduzir um ritual com magia e morreu, por isso sente raiva de seu irmão Raoni que usa magia. Time dos lunaristas",
+    "tom": "séria, mas sempre com ar de estar sentindo tédio"
 }
 
 personagens = {
