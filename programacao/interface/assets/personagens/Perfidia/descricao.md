@@ -1,0 +1,1 @@
+Uma das mais famosas ativistas Lunaristas, Perfídia usa magia pura da luz das Luas.

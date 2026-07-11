@@ -1,0 +1,1 @@
+Irmão de Tainá, ele afirma que a magia reviveu sua cultura e vai curar o planeta. Utiliza de pássaros para suas magias.

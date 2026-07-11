@@ -1,0 +1,1 @@
+Irmã de Raoni, ela afirma que a magia assassinou a sua mãe. Utiliza de adagas para eliminar seus inimigos.
