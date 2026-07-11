@@ -265,7 +265,6 @@ def main():
         # Limita o jogo a 60 FPS
         clock.tick(60)
 
-    pygame.quit()
     return personagem_escolhido
 
 if __name__ == "__main__":
