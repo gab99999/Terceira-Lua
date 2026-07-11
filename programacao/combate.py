@@ -13,6 +13,7 @@ Funções principais:
 from personagens import personagens as skill
 import pygame
 from turnos import SistemaTurnos
+from interacoes import criar_interacoes, tentar_interacao
 
 # ------------------------
 #      Base da tela
@@ -97,6 +98,7 @@ escolha2 = 'Perfídia'
 
 personagem1 = criar_combatente(skill[escolha1])
 personagem2 = criar_combatente(skill[escolha2])
+interacoes_restantes = criar_interacoes()
 
 turnos = SistemaTurnos(personagem1, personagem2)
 
@@ -131,7 +133,9 @@ while not turnos.combate_acabou():
                 jogador["habilidade_3"](jogador, alvo)
 
             elif botaointeracao.collidepoint(mouse):
-                jogador["interações"](jogador, alvo)
+                if interacoes_restantes:
+                    nome_interacao = next(iter(interacoes_restantes))
+                    tentar_interacao(nome_interacao, interacoes_restantes, jogador, alvo)
 
             jogador["pode_agir"] = True
 

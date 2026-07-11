@@ -16,6 +16,8 @@ import random
 # AMARA
 # ==========================================
 
+# Detalhes das habilidades e passivas estão em personagens.md
+
 # Aplica o dano do veneno mágico.
 def morte_lenta(usuario, alvo):
     match usuario['veneno']:
@@ -97,6 +99,8 @@ def cura_envenenada(usuario, alvo):
 # ANTONIUS
 # ==========================================
 
+# Detalhes das habilidades e passivas estão em personagens.md
+
 # Sempre que Antonius sofre dano, ganha resistência.
 def antonius_dano(alvo):
     if alvo['nome'] == 'Antonius':
@@ -111,14 +115,12 @@ def treinado_para_tudo(usuario, alvo):
         x = random.randint(1, 3)
 
         match x:
-
             case 1:
                 usuario['evasao'] += 1
                 print('Evasão aumentada!')
             case 2:
                 usuario['precisao_bonus'] += 1
                 print('Precisão aumentada!')
-
             case 3:
                 cura = b.cura(0, 30)
                 cura = b.aumento_cura(usuario['cura_porcentagem'], cura)
@@ -158,8 +160,10 @@ def tiro_certeiro(usuario, alvo):
 
 
 # ==========================================
-# NICOLAS
+# NICHOLAS
 # ==========================================
+
+# Detalhes das habilidades e passivas estão em personagens.md
 
 # Ativa o choque térmico ao combinar frio e calor.
 def dualidade_mesclada(usuario, alvo):
@@ -210,11 +214,13 @@ def fusao_magica(usuario, alvo):
         b.parar_turno(alvo, usuario, 10)
 
 
-# Buffs exclusivos após a Terceira Lua.
 # ==========================================
 # PERFÍDIA
 # ==========================================
 
+# Detalhes das habilidades e passivas estão em personagens.md
+
+# Buffs exclusivos após a Terceira Lua.
 # Passiva
 def cria_lunar(usuario, alvo):
 
@@ -309,6 +315,8 @@ def brutalizar_as_luas(usuario, alvo):
 # RAONI
 # ==========================================
 
+# Detalhes das habilidades e passivas estão em personagens.md
+
 # Aumenta o dano conforme as plumas acumuladas.
 def cura_alimenta_os_fracos(usuario, dano):
     if not isinstance(dano, (int, float)):
@@ -360,6 +368,8 @@ def inversao_curativa(usuario, alvo):
 # ==========================================
 # TAINÁ
 # ==========================================
+
+# Detalhes das habilidades e passivas estão em personagens.md
 
 # Aumenta o dano conforme a vida diminui.
 def dor_alimenta_os_fortes(usuario, alvo):
