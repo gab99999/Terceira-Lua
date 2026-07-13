@@ -1,0 +1,1 @@
+Estudou com Perfídia, mas agora pensa que a magia é uma droga viciante se usada de maneira errada. Utiliza magia mesmo sendo contra ela.

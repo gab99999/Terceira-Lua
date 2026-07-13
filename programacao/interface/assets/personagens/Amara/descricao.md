@@ -1,0 +1,1 @@
+Uma química renomada, Amara proporciona a mistura da ciência e magia. Ela modifica seus estudos químicos para criar magia.

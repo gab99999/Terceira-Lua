@@ -1,33 +1,37 @@
-import base as b
 import random
 
-def TerceiraLua (personagem1, personagem2):
-    x = random.radint(1, 5)
-    if personagem1['terceira_lua'] == True:
-        match x:
-            case 1:
-                personagem1['dano_porcentagem'] += 35
-            case 2:
-                personagem1['evasao'] += 4
-            case 3:
-                personagem1['cura_porcentagem'] += 50
-            case 4:
-                personagem1['precisao_bonus'] += 8
-            case 5:
-                personagem2["veneno"] *= 2
-                personagem1['resistencia'] *= 2
-                personagem1['plumas'] *= 2
-    if personagem2['terceira_lua'] == True:
-        match x:
-            case 1:
-                personagem2['dano_porcentagem'] += 35
-            case 2:
-                personagem2['evasao'] += 4
-            case 3:
-                personagem2['cura_porcentagem'] += 50
-            case 4:
-                personagem2['precisao_bonus'] += 8
-            case 5:
-                personagem1["veneno"] *= 2
-                personagem2['resistencia'] *= 2
-                personagem2['plumas'] *= 2
+
+def aplicar_evento_terceira_lua(usuario, alvo, evento):
+    # Aplica um dos efeitos aleatorios da Terceira Lua
+
+    match evento:
+        case 1:
+            usuario['dano_porcentagem'] += 0.35
+        case 2:
+            usuario['evasao'] += 4
+        case 3:
+            usuario['cura_porcentagem'] += 0.50
+        case 4:
+            usuario['precisao_bonus'] += 8
+        case 5:
+            alvo['veneno'] *= 2
+            usuario['resistencia'] *= 2
+            usuario['plumas'] *= 2
+
+
+def terceira_lua(personagem1, personagem2):
+    # Sorteia e aplica o evento da Terceira Lua aos personagens ativos
+
+    evento = random.randint(1, 5)
+
+    if personagem1.get('terceira_lua', False):
+        aplicar_evento_terceira_lua(personagem1, personagem2, evento)
+
+    if personagem2.get('terceira_lua', False):
+        aplicar_evento_terceira_lua(personagem2, personagem1, evento)
+
+
+def TerceiraLua(personagem1, personagem2):
+    # Aplicar a terceira lua final
+
+    terceira_lua(personagem1, personagem2)

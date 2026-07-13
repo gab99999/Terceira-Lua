@@ -1,0 +1,1 @@
+Ex-militar, Antonius tem o treinamento especializado foi treinado para todas as situações de combate, até a chegada da Segunda Lua mudar isso.
