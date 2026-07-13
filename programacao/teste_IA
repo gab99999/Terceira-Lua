@@ -1,0 +1,93 @@
+import random
+
+# =========================================================================================================
+#                                     1- ENTENDENDO AS OPÇÕES DO BOT
+# =========================================================================================================
+def obter_habilidades_disponiveis():
+    """Como não existem mais cooldowns, as três habilidades estão sempre prontas."""
+    return ["habilidade_1", "habilidade_2", "habilidade_3"]
+
+
+# =========================================================================================================
+#                               2- ESTRUTURANDO OS NÍVEIS DE INTELIGÊNCIA ARTIFICIAL
+# =========================================================================================================
+def executar_turno_bot(bot, jogador):
+    """Calcula e retorna a habilidade escolhida pelo bot com base na sua dificuldade."""
+    # 1. Busca as opções disponíveis (Código 1)
+    opcoes = obter_habilidades_disponiveis()
+    
+    # 2. Define o comportamento baseado na dificuldade do Bot atual (Padrão: FÁCIL)
+    dificuldade = bot.get("dificuldade", "FÁCIL")
+    
+    if dificuldade == "FÁCIL" or dificuldade == "MÉDIA":
+        # Sem hierarquia de força, bots fáceis e médios escolhem puramente ao acaso
+        return random.choice(opcoes)
+        
+    elif dificuldade == "DIFÍCIL":
+        # IA Inteligente: Chama a lógica avançada (Código 3)
+        return logica_ia_avancada(bot, jogador, opcoes)
+        
+    return "habilidade_1"  # Recurso de segurança
+
+
+# =========================================================================================================
+#                                        3- IA AVANÇADA (CHEFE)
+# =========================================================================================================
+def logica_ia_avancada(bot, jogador, opcoes):
+    """Lógica onde o bot analisa o contexto para tomar a melhor decisão."""
+    # Regra de Sobrevivência: Se a vida do bot estiver abaixo de 30%
+    vida_critica = (bot["vida_atual"] / bot["vida_maxima"]) <= 0.30
+    
+    if vida_critica:
+        # Se estiver morrendo, ele sempre prioriza a habilidade_2 (defesa/cura)
+        return "habilidade_2"
+        
+    # Se a vida estiver segura, ele escolhe de forma totalmente imprevisível entre as três
+    return random.choice(opcoes)
+
+
+# =========================================================================================================
+#                                         PARTE DOS TESTES (PROVA REAL)
+# =========================================================================================================
+
+# Criando dicionários reais de personagens para simular a batalha
+bot_facil = {
+    "nome": "Goblin",
+    "vida_maxima": 50,
+    "vida_atual": 50,
+    "dificuldade": "FÁCIL"
+}
+
+bot_dificil_saudavel = {
+    "nome": "Dragão Chefe (Saudável)",
+    "vida_maxima": 200,
+    "vida_atual": 200,
+    "dificuldade": "DIFÍCIL"
+}
+
+bot_dificil_morrendo = {
+    "nome": "Dragão Chefe (Crítico)",
+    "vida_maxima": 200,
+    "vida_atual": 40,  # 20% de vida (Abaixo dos 30% críticos)
+    "dificuldade": "DIFÍCIL"
+}
+
+jogador_ficticio = {"nome": "Herói", "vida_atual": 100}
+
+
+# --- EXECUÇÃO E EXIBIÇÃO DOS RESULTADOS ---
+
+print("--- TESTANDO BOT FÁCIL (Deve variar as escolhas aleatoriamente entre 1, 2 e 3) ---")
+for i in range(5):
+    escolha = executar_turno_bot(bot_facil, jogador_ficticio)
+    print(f"Tentativa {i+1}: O bot escolheu a {escolha}")
+
+print("\n--- TESTANDO BOT DIFÍCIL SAUDÁVEL (Deve escolher de forma aleatória e imprevisível) ---")
+for i in range(5):
+    escolha = executar_turno_bot(bot_dificil_saudavel, jogador_ficticio)
+    print(f"Tentativa {i+1}: O bot escolheu a {escolha}")
+
+print("\n--- TESTANDO BOT DIFÍCIL EM PERIGO (DEVE ESCOLHER SEMPRE A HABILIDADE_2) ---")
+for i in range(5):
+    escolha = executar_turno_bot(bot_dificil_morrendo, jogador_ficticio)
+    print(f"Tentativa {i+1}: O bot escolheu a {escolha}")
