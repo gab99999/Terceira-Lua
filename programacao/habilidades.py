@@ -224,14 +224,12 @@ def fusao_magica(usuario, alvo):
 # Passiva
 def cria_lunar(usuario, alvo):
 
-    if usuario['terceira_lua']:
+    if usuario['terceira_lua'] and not usuario.get('passiva_terceira_lua_aplicada', False):
         usuario['dano_porcentagem'] += 0.05
         usuario['evasao'] += 1
         usuario['cura_porcentagem'] += 0.10
         usuario['precisao_bonus'] += 2
-
-        alvo['terceira_lua'] = False
-        usuario['terceira_lua'] = False
+        usuario['passiva_terceira_lua_aplicada'] = True
 
 # Habilidade 1
 def invocacao_lunar(usuario, alvo):

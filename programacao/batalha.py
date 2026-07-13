@@ -1,107 +1,258 @@
-# ===============================================
-#     1- DEFININDO OS ESTADOS DA BATABLHA 
-# ===============================================
-''' Primeiro vou usar a biblioteca nativa enum do Python para mapear exatamente o que está 
-acontecendo no jogo. Isso evita variáveis soltas'''
+# motor da batalha por turnos.
+
+# a interface só precisa criar um ``GerenciadorBatalha`` e chamar
+# ``executar_acao`` quando o jogador escolher uma habilidade ou interação.
+
 
 from enum import Enum, auto
+import random
+
+from combate import criar_combatente
+from eventos import terceira_lua
+from interacoes import criar_interacoes, tentar_interacao
+from personagens import personagens
+from turnos import SistemaTurnos
+import base as b
+
 
 class EstadoBatalha(Enum):
-    INICIO_BATALHA = auto()      # Carrega personagens, aplica passivas iniciais
-    TURNO_JOGADOR = auto()       # Aguarda o input da interface 
-    TURNO_BOT = auto()           # Momento em que a IA decide a ação
-    PROCESSANDO_ACAO = auto()    # Calcula dano/efeitos 
-    FIM_BATALHA = auto()         # Alguém morreu, define vitória/derrota e avança campanha
+    INICIO_BATALHA = auto()
+    TURNO_JOGADOR = auto()
+    TURNO_BOT = auto()
+    PROCESSANDO_ACAO = auto()
+    FIM_BATALHA = auto()
 
-# ==================================================
-#     2- ESTRUTUTURA DO GERENCIADOR DE BATALHA
-# ==================================================
-''' Vou criar a classe principal que vai ser controlada.
-    Ela vai ditar o ritmo do jogo.'''
 
 class GerenciadorBatalha:
-    def __init__(self, jogador, bot):
-        self.jogador = jogador  # Objeto do personagem do jogador (vindo do JSON)
-        self.bot = bot          # Objeto do bot (vindo do JSON)
+    """ coordena uma partida sem depender do Pygame.
+
+    ``jogador`` e ``bot`` podem ser os modelos de ``personagens`` ou
+    combatentes já criados. ``turno_terceira_lua`` é opcional para permitir
+    partidas e testes determinísticos.
+    """
+
+    def __init__(self, jogador, bot, turno_terceira_lua=None):
+        self.jogador = self._criar_se_necessario(jogador)
+        self.bot = self._criar_se_necessario(bot)
+        self.turnos = SistemaTurnos(self.jogador, self.bot)
+        self.interacoes_restantes = criar_interacoes()
         self.estado_atual = EstadoBatalha.INICIO_BATALHA
         self.turno_atual = 1
-        self.quem_joga = "Jogador"  # Quem começa (pode ser decidido por velocidade/sorte)
+        self.turno_terceira_lua = (
+            turno_terceira_lua
+            if turno_terceira_lua is not None
+            else random.randint(9, 12)
+        )
+        self.terceira_lua_ativa = False
+        self.evento_terceira_lua = None
+        self.historico = []
+
+    @staticmethod
+    def _criar_se_necessario(personagem):
+        if isinstance(personagem, str):
+            personagem = personagens[personagem]
+        if "vida_maxima" in personagem:
+            return personagem
+        return criar_combatente(personagem)
 
     def iniciar_combate(self):
-        """Prepara o terreno para a luta começar."""
-        print(f"--- Iniciando Batalha: {self.jogador['nome']} VS {self.bot['nome']} ---")
-        # TODO: Chamar função do Gabriel para aplicar passivas de início de jogo
-        
-        # Define quem começa e muda o estado
-        if self.quem_joga == "Jogador":
-            self.estado_atual = EstadoBatalha.TURNO_JOGADOR
-        else:
-            self.estado_atual = EstadoBatalha.TURNO_BOT
-            
-        self.atualizar_loop()
+        """ erepara a primeira vez do jogador e devolve o estado inicial"""
+        self._registrar(
+            f"Batalha iniciada: {self.jogador['nome']} vs {self.bot['nome']}."
+        )
+        self._iniciar_turno()
+        return self.resumo()
 
     def atualizar_loop(self):
-        """O coração do sistema. Controla o fluxo baseado no estado atual."""
-        if self.estado_atual == EstadoBatalha.TURNO_JOGADOR:
-            print(f"\n[Turno {self.turno_atual}] Sua vez! Escolha uma habilidade...")
-            # Aqui o código para, esperando o Luiz (Interface) enviar a escolha.
-            
-        elif self.estado_atual == EstadoBatalha.TURNO_BOT:
-            print(f"\n[Turno {self.turno_atual}] Vez do Bot pensando...")
+        # ponto de compatibilidade
+        return self.resumo()
+
+    def executar_acao(self, acao, interacao=None):
+        """ executa a ação do jogador e, em seguida, a resposta do bot
+
+        ``acao`` aceita ``habilidade_1``, ``habilidade_2``, ``habilidade_3``
+        ou ``interacao``. Para uma interação, informe a chave em ``interacao``.
+        """
+        if self.estado_atual != EstadoBatalha.TURNO_JOGADOR:
+            raise ValueError("Não é o turno do jogador.")
+        self._executar_acao_atual(acao, interacao)
+        if not self.checar_fim_de_jogo() and self.estado_atual == EstadoBatalha.TURNO_BOT:
             self.executar_turno_bot()
+        return self.resumo()
 
     def executar_turno_bot(self):
-        """Chama a lógica da IA (que eu vou desenvolver depois)."""
-        # Exemplo simples temporário: o bot sempre usa a habilidade 1
-        habilidade_escolhida = "habilidade1" 
-        
-        # Avançando para processar a ação do bot
-        self.processar_acao(temporario_autor="Bot", habilidade=habilidade_escolhida)
+        """ escolhe uma habilidade e executa o turno do bot."""
+        if self.estado_atual != EstadoBatalha.TURNO_BOT:
+            return self.resumo()
+        acao = self._escolher_acao_bot()
+        self._executar_acao_atual(acao)
+        return self.resumo()
 
-    def processar_acao(self, autor, habilidade):
-        """Aplica os efeitos da jogada, atualiza cooldowns e checa vida."""
+    def _escolher_acao_bot(self):
+        # as três habilidades estão sempre prontas.
+        opcoes = ("habilidade_1", "habilidade_2", "habilidade_3")
+        dificuldade = self.bot.get("dificuldade", "FÁCIL")
+        if dificuldade == "MÉDIA":
+            return "habilidade_3"
+        if dificuldade == "DIFÍCIL" and self.jogador["vida"] <= 150:
+            return "habilidade_3"
+        return random.choice(opcoes)
+
+    def processar_acao(self, autor, habilidade, interacao=None):
+        # gerenciador de ações.
+        combatente = self.jogador if autor == "Jogador" else self.bot
+        if combatente is not self.turnos.jogador_atual():
+            raise ValueError("O autor informado não é o combatente do turno.")
+        return self._executar_acao_atual(habilidade, interacao)
+
+    def _executar_acao_atual(self, acao, nome_interacao=None):
+        usuario = self.turnos.jogador_atual()
+        alvo = self.turnos.alvo_atual()
         self.estado_atual = EstadoBatalha.PROCESSANDO_ACAO
-        print(f"> {autor} usou {habilidade}!")
-        
-        # TODO: Aqui eu vou integrar com o sistema de dano do Gabriel/Rafael.
-        # Exemplo simulado:
-        if autor == "Bot":
-            self.jogador["vida_atual"] -= 15  # Simulação de dano
+
+        # aceita também os nomes sem sublinhado usados nos rascunhos da IA.
+        acao = {
+            "habilidade1": "habilidade_1",
+            "habilidade2": "habilidade_2",
+            "habilidade3": "habilidade_3",
+        }.get(acao, acao)
+
+        vida_usuario_antes = usuario["vida"]
+        vida_alvo_antes = alvo["vida"]
+
+        if acao in ("habilidade_1", "habilidade_2", "habilidade_3"):
+            usuario[acao](usuario, alvo)
+            descricao = acao.replace("_", " ")
+            self._acelerar_terceira_lua_se_necessario(
+                usuario, acao, vida_alvo_antes, alvo["vida"]
+            )
+        elif acao == "interacao":
+            if not nome_interacao:
+                raise ValueError("Informe o nome da interação escolhida.")
+            if not tentar_interacao(nome_interacao, self.interacoes_restantes, usuario, alvo):
+                raise ValueError("Interação indisponível.")
+            descricao = nome_interacao.replace("_", " ")
         else:
-            self.bot["vida_atual"] -= 20
+            raise ValueError("Ação inválida.")
 
-        # 1. Diminuir o cooldown das habilidades desse personagem
-        # 2. Processar ticks de veneno/sangramento (Buffs/Debuffs)
+        b.limitar_vida(usuario)
+        b.limitar_vida(alvo)
+        dano = max(0, vida_alvo_antes - alvo["vida"])
+        cura = max(0, usuario["vida"] - vida_usuario_antes)
+        self._registrar(
+            f"{usuario['nome']} usou {descricao} "
+            f"(dano: {dano:.0f}, cura: {cura:.0f})."
+        )
 
-        # Checa se o jogo acabou
+        # Cegueira duração.
+        usuario["cego"] = False
         if self.checar_fim_de_jogo():
-            self.estado_atual = EstadoBatalha.FIM_BATALHA
             self.finalizar_batalha()
-        else:
-            # Se ninguém morreu, passa o turno
-            self.passar_turno()
+            return
+        self.passar_turno()
+
+    def _acelerar_terceira_lua_se_necessario(self, usuario, acao, vida_antes, vida_depois):
+        # acelaração da perfídia
+        if self.terceira_lua_ativa or usuario["nome"] != "Perfídia":
+            return
+        if vida_depois >= vida_antes:
+            return
+        if acao == "habilidade_1":
+            self.acelerar_terceira_lua(1)
+        elif acao == "habilidade_3":
+            self.acelerar_terceira_lua(random.randint(1, 2))
+
+    def acelerar_terceira_lua(self, quantidade):
+        # prevenção de bugs com a terceira lua
+        chegada_anterior = self.turno_terceira_lua
+        self.turno_terceira_lua = max(
+            self.turno_atual + 1,
+            self.turno_terceira_lua - quantidade,
+        )
+        adiantado = chegada_anterior - self.turno_terceira_lua
+        if adiantado:
+            self._registrar(
+                f"A Perfídia adiantou a Terceira Lua em {adiantado} turno(s)."
+            )
 
     def passar_turno(self):
-        """Alterna quem joga e incrementa o contador de turnos."""
-        if self.quem_joga == "Jogador":
-            self.quem_joga = "Bot"
-            self.estado_atual = EstadoBatalha.TURNO_BOT
-        else:
-            self.quem_joga = "Jogador"
-            self.estado_atual = EstadoBatalha.TURNO_JOGADOR
-            self.turno_atual += 1  # O ciclo fecha quando volta para o jogador
-            
-        self.atualizar_loop()
+        self.turnos.proximo_turno()
+        if self.turnos.jogador_atual() is self.jogador:
+            self.turno_atual += 1
+        self._iniciar_turno()
+
+    def _iniciar_turno(self):
+        if self.checar_fim_de_jogo():
+            self.finalizar_batalha()
+            return
+
+        if not self.terceira_lua_ativa and self.turno_atual >= self.turno_terceira_lua:
+            self._ativar_terceira_lua()
+
+        usuario = self.turnos.jogador_atual()
+        alvo = self.turnos.alvo_atual()
+        self._aplicar_passivas_de_turno(usuario, alvo)
+        b.limitar_vida(usuario)
+        b.limitar_vida(alvo)
+        if self.checar_fim_de_jogo():
+            self.finalizar_batalha()
+            return
+
+        if not usuario["pode_agir"]:
+            usuario["pode_agir"] = True
+            self._registrar(f"{usuario['nome']} perdeu o turno.")
+            self.passar_turno()
+            return
+
+        self.estado_atual = (
+            EstadoBatalha.TURNO_JOGADOR
+            if usuario is self.jogador
+            else EstadoBatalha.TURNO_BOT
+        )
+        self._registrar(f"Turno {self.turno_atual}: vez de {usuario['nome']}.")
+
+    def _aplicar_passivas_de_turno(self, usuario, alvo):
+        # executa somente passivas que são realmente de início de turno.
+        nome = usuario["nome"]
+        if nome in ("Amara", "Antonius", "Tainá"):
+            usuario["passiva"](usuario, alvo)
+
+    def _ativar_terceira_lua(self):
+        self.terceira_lua_ativa = True
+        self.evento_terceira_lua = terceira_lua(self.jogador, self.bot)
+        self._registrar(
+            f"A Terceira Lua chegou no turno {self.turno_atual} "
+            f"(evento {self.evento_terceira_lua})."
+        )
+
+        for combatente, outro in ((self.jogador, self.bot), (self.bot, self.jogador)):
+            if combatente["nome"] == "Perfídia":
+                combatente["terceira_lua"] = True
+                combatente["passiva"](combatente, outro)
 
     def checar_fim_de_jogo(self):
-        return self.jogador["vida_atual"] <= 0 or self.bot["vida_atual"] <= 0
+        return self.turnos.combate_acabou()
 
     def finalizar_batalha(self):
-        if self.jogador["vida_atual"] <= 0:
-            print("\n❌ Derrota! O Bot venceu.")
-            # TODO: Chamar tela de derrota do Luiz
-        else:
-            print("\n🏆 Vitória! Você venceu.")
-            # TODO: Avançar a campanha (minha responsabilidade) e chamar tela de vitória do Luiz
+        if self.estado_atual == EstadoBatalha.FIM_BATALHA:
+            return
+        self.estado_atual = EstadoBatalha.FIM_BATALHA
+        vencedor = self.turnos.vencedor()
+        self._registrar(f"Fim de batalha: {vencedor['nome']} venceu.")
 
+    def resumo(self):
+        """ estado que uma interface pode consultar a cada ação."""
+        return {
+            "estado": self.estado_atual,
+            "turno_atual": self.turno_atual,
+            "turno_terceira_lua": self.turno_terceira_lua,
+            "terceira_lua_ativa": self.terceira_lua_ativa,
+            "evento_terceira_lua": self.evento_terceira_lua,
+            "jogador": self.jogador,
+            "bot": self.bot,
+            "interacoes_disponiveis": tuple(self.interacoes_restantes),
+            "historico": tuple(self.historico),
+        }
 
+    def _registrar(self, mensagem):
+        self.historico.append(mensagem)
