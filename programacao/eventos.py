@@ -20,18 +20,16 @@ def aplicar_evento_terceira_lua(usuario, alvo, evento):
 
 
 def terceira_lua(personagem1, personagem2):
-    # Sorteia e aplica o evento da Terceira Lua aos personagens ativos
+    # Sorteia e aplica o evento global aos dois combatentes.
 
     evento = random.randint(1, 5)
 
-    if personagem1.get('terceira_lua', False):
-        aplicar_evento_terceira_lua(personagem1, personagem2, evento)
-
-    if personagem2.get('terceira_lua', False):
-        aplicar_evento_terceira_lua(personagem2, personagem1, evento)
+    aplicar_evento_terceira_lua(personagem1, personagem2, evento)
+    aplicar_evento_terceira_lua(personagem2, personagem1, evento)
+    return evento
 
 
 def TerceiraLua(personagem1, personagem2):
     # Aplicar a terceira lua final
 
-    terceira_lua(personagem1, personagem2)
+    return terceira_lua(personagem1, personagem2)

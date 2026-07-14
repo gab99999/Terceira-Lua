@@ -1,66 +1,30 @@
-"""
-combate.py
+# estruturas do combate
 
-Responsável pelo sistema de batalha.
 
-Funções principais:
-    - Controle de turnos
-    - Aplicação de habilidades
-    - Aplicação de efeitos
-    - Verificação de vitória
-"""
-
-from personagens import personagens as skill
-import pygame
-from turnos import SistemaTurnos
-from interacoes import criar_interacoes, tentar_interacao
-
-# ------------------------
-#      Base da tela
-# ------------------------
-
-pygame.init()
-
-tela = pygame.display.set_mode((1280, 720)) # criação da tela
-pygame.display.set_caption("Terceira Lua")
-
-fonte = pygame.font.SysFont("arial", 32) # criação de uma fonte de texto
-
-# ------------------------
-#          Funções
-# ------------------------
 
 def criar_combatente(personagem):
+    # cria a cópia temporária de um personagem usada em uma partida.
 
-    """
-    Cria uma cópia temporária de um personagem
-    para ser utilizada durante uma batalha.
-
-    """
     combatente = personagem.copy()
 
     combatente["vida_maxima"] = combatente["vida"]
-
     combatente["pode_agir"] = True
-
     combatente["veneno"] = 0
     combatente["cego"] = False
-    combatente['resistencia'] = 0
-    combatente['plumas'] = 0
-
-    combatente['frio'] = False
-    combatente['quente'] = False
-
-    combatente['terceira_lua'] = False
-
+    combatente["resistencia"] = 0
+    combatente["plumas"] = 0
+    combatente["frio"] = False
+    combatente["quente"] = False
+    combatente["terceira_lua"] = False
+    combatente["passiva_terceira_lua_aplicada"] = False
     combatente["precisao_bonus"] = 0
     combatente["evasao_bonus"] = 0
-
     combatente["dano_porcentagem"] = 0
     combatente["cura_porcentagem"] = 0
-
     combatente["dano_pontos"] = 0
     combatente["cura_pontos"] = 0
+    combatente["bonus_60_vida"] = False
+    combatente["bonus_30_vida"] = False
 
     return combatente
 
