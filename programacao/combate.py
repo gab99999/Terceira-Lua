@@ -172,9 +172,3 @@ while not turnos.combate_acabou():
 
     pygame.display.flip()
 
-
-
-
-
-        
-
