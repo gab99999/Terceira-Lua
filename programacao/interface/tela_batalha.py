@@ -410,11 +410,11 @@ def main(personagem):
             if tempo < 150:
                 pos_jogador = 120
 
-            elif tempo < 300:
-                pos_jogador = 50
+            if tempo < 100:
+                pos_inimigo = 780
 
-            else:
-                animacao_ataque = False
+            elif tempo < 200:
+                pos_inimigo = 840
 
 
         pos_inimigo = 840
