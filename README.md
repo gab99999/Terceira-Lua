@@ -16,6 +16,7 @@ Assistência do Chatgpt para testes e correções de bugs.
 # Trilha sonora por: 
 
 Yasmin Pereira Lucas
+Mais detalhes nos créditos de trilha sonora.
 
 # Instalação: 
 
