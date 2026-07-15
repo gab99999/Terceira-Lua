@@ -20,6 +20,7 @@ def main(personagem):
     fonte = pygame.font.SysFont("Arial", 28)
     fonte_titulo = pygame.font.SysFont("Arial", 42)
     fonte_log = pygame.font.SysFont("Arial", 20)
+    fonte_dano = pygame.font.SysFont("Arial", 60, bold=True)
 
     background = pygame.image.load(
         BASE_DIR / "assets" / "fundos" / "background_batalha.png"
@@ -78,6 +79,7 @@ def main(personagem):
             BASE_DIR / "assets" / "personagens" / inimigo / "rotations" / "west.png"
     ).convert_alpha()
 
+
     imagem_inimigo = pygame.transform.scale(imagem_inimigo,
 (
     imagem_inimigo.get_width()*3,
@@ -135,7 +137,41 @@ def main(personagem):
 
     selecionado = 0
 
-    mensagem = "..."
+    
+
+
+    tomou_dano = False
+    tempo_dano = 0
+
+    animacao_ataque = False
+    tempo_ataque = 0
+    atacante = None
+
+    esperando_ataque = False
+    tempo_espera = 0
+
+    dano_visual = None
+    dano_y = 250
+    dano_alpha = 255
+
+    dano_inimigo_visual = None
+    dano_inimigo_y = 250
+    dano_inimigo_alpha = 255
+
+    tempo_dano_inimigo = 0
+
+    # animação do inimigo atacando
+    animacao_ataque_inimigo = False
+    tempo_ataque_inimigo = 0
+
+    # dano recebido pelo jogador
+    dano_jogador_visual = None
+    dano_jogador_y = 250
+    dano_jogador_alpha = 255
+    tempo_dano_jogador = 0
+
+    esperando_ataque_inimigo = False
+    tempo_espera_inimigo = 0
 
     rodando = True
 
@@ -148,6 +184,11 @@ def main(personagem):
         jogador = estado["jogador"]
         bot = estado["bot"]
 
+        if esperando_ataque:
+
+            if pygame.time.get_ticks() - tempo_espera > 1000:
+                esperando_ataque = False
+
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
@@ -159,7 +200,9 @@ def main(personagem):
                     if event.key == pygame.K_RETURN:
                         return
 
-            if estado["estado"] == EstadoBatalha.TURNO_JOGADOR:
+
+            
+            if estado["estado"] == EstadoBatalha.TURNO_JOGADOR and not esperando_ataque:
 
                 if event.type == pygame.KEYDOWN:
 
@@ -171,24 +214,68 @@ def main(personagem):
 
                     elif event.key == pygame.K_RETURN:
 
+                        vida_jogador_antes = jogador["vida"]
+                        vida_inimigo_antes = bot["vida"]
+
                         if selecionado == 0:
                             estado = batalha.executar_acao("habilidade_1")
+                            esperando_ataque = True
+                            tempo_espera = pygame.time.get_ticks()
 
                         elif selecionado == 1:
                             estado = batalha.executar_acao("habilidade_2")
+                            esperando_ataque = True
+                            tempo_espera = pygame.time.get_ticks()                            
 
                         elif selecionado == 2:
                             estado = batalha.executar_acao("habilidade_3")
+                            esperando_ataque = True
+                            tempo_espera = pygame.time.get_ticks()
+
+
+                        dano = vida_inimigo_antes - estado["bot"]["vida"]
+                        dano_recebido = vida_jogador_antes - estado["jogador"]["vida"]
+
+                        if dano > 0:
+
+                            dano_visual = int(dano)
+
+                            dano_y = 250
+                            dano_alpha = 255
+
+                            tomou_dano = True
+                            tempo_dano = pygame.time.get_ticks()
+
+                            animacao_ataque = True
+                            tempo_ataque = pygame.time.get_ticks()
+                            atacante = "jogador"
+
+                        if dano_recebido > 0:
+
+                            esperando_ataque_inimigo = True
+                            tempo_espera_inimigo = pygame.time.get_ticks()
 
                         else:
-                            interacoes = estado["interacoes_disponiveis"]
+                            pass
 
-                            if interacoes:
-                                estado = batalha.executar_acao(
-                                    "interacao",
-                                    interacoes[0]
-                                )
 
+        if esperando_ataque_inimigo:
+
+            tempo = pygame.time.get_ticks() - tempo_espera_inimigo
+
+            if tempo > 1000:  # 1 segundo esperando
+
+                dano_jogador_visual = int(dano_recebido)
+
+                dano_jogador_y = 250
+                dano_jogador_alpha = 255
+
+                tempo_dano_jogador = pygame.time.get_ticks()
+
+                animacao_ataque_inimigo = True
+                tempo_ataque_inimigo = pygame.time.get_ticks()
+
+                esperando_ataque_inimigo = False
 
         if estado["terceira_lua_ativa"] and not lua_animacao:
             lua_animacao = True
@@ -223,6 +310,63 @@ def main(personagem):
         screen.blit(fonte_titulo.render(personagem,True,BRANCO),(175,180))
         screen.blit(fonte_titulo.render(inimigo,True,BRANCO),(970,180))
 
+
+        
+        if dano_visual:
+
+            tempo = pygame.time.get_ticks() - tempo_ataque
+
+            # sobe
+            dano_y -= 2
+
+            # desaparece aos poucos
+            dano_alpha = max(0, 255 - int(tempo * 0.35))
+
+            texto_dano = fonte_dano.render(
+                f"-{dano_visual}",
+                True,
+                VERMELHO
+            )
+
+            texto_dano.set_alpha(dano_alpha)
+
+            screen.blit(
+                texto_dano,
+                (850, dano_y)
+            )
+
+            if tempo > 800:
+                dano_visual = None
+                dano_alpha = 255
+
+        if dano_jogador_visual:
+
+            tempo = pygame.time.get_ticks() - tempo_dano_jogador
+
+            dano_jogador_y -= 2
+
+            dano_jogador_alpha = max(
+                0,
+                255 - int(tempo * 0.35)
+            )
+
+            texto = fonte_dano.render(
+                f"-{dano_jogador_visual}",
+                True,
+                VERMELHO
+            )
+
+            texto.set_alpha(dano_jogador_alpha)
+
+            screen.blit(
+                texto,
+                (250, dano_jogador_y)
+            )
+
+            if tempo > 800:
+                dano_jogador_visual = None
+
+
         desenhar_barra(
                     100,
                     130,
@@ -255,9 +399,86 @@ def main(personagem):
     ),
     (960,155)
 )
+        
+        
+        pos_jogador = 50
 
-        screen.blit(imagem_personagem, (50,150))
-        screen.blit(imagem_inimigo, (840,150))
+        if animacao_ataque and atacante == "jogador":
+
+            tempo = pygame.time.get_ticks() - tempo_ataque
+
+            if tempo < 150:
+                pos_jogador = 120
+
+            elif tempo < 300:
+                pos_jogador = 50
+
+            else:
+                animacao_ataque = False
+
+
+        pos_inimigo = 840
+
+        if animacao_ataque_inimigo:
+
+            tempo = pygame.time.get_ticks() - tempo_ataque_inimigo
+
+            if tempo < 100:
+                pos_jogador = 35
+
+            elif tempo < 200:
+                pos_jogador = 65
+
+            else:
+                animacao_ataque_inimigo = False
+
+        if tomou_dano:
+
+            tempo = pygame.time.get_ticks() - tempo_dano
+
+            if tempo < 100:
+                pos_inimigo = 825
+
+            elif tempo < 200:
+                pos_inimigo = 855
+
+            elif tempo < 300:
+                pos_inimigo = 840
+
+            else:
+                tomou_dano = False
+            
+
+        if dano_inimigo_visual:
+
+            tempo = pygame.time.get_ticks() - tempo_dano_inimigo
+
+            dano_inimigo_y -= 2
+
+            dano_inimigo_alpha = max(
+                0,
+                255 - int(tempo * 0.35)
+            )
+
+            texto = fonte_dano.render(
+                f"-{dano_inimigo_visual}",
+                True,
+                VERMELHO
+            )
+
+            texto.set_alpha(dano_inimigo_alpha)
+
+            screen.blit(
+                texto,
+                (100, dano_inimigo_y)
+            )
+
+            if tempo > 800:
+                dano_inimigo_visual = None
+
+        screen.blit(imagem_inimigo, (pos_inimigo,150))
+
+        screen.blit(imagem_personagem, (pos_jogador,150))
 
         pygame.draw.line(screen, BRANCO, (330, 540), (330, 720), 2)
         pygame.draw.rect(screen,PRETO,(0,540,1280,180))
