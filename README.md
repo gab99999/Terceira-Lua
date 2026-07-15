@@ -8,6 +8,7 @@ O jogador poderá escolher entre diferentes personagens, cada um com habilidades
 Gabriel Rodrigues Alves
 Luiz Otávio da Silva
 Rafael de Almeida Santana
+Lorenzo Castro Sales
 
 
 Assistência do Chatgpt para testes e correções de bugs.
