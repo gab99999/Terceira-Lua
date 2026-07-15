@@ -154,7 +154,7 @@ personagens = {
     "Amara": amara,
     "Antonius": antonius,
     "Nicholas": nicholas,
-    "Perfídia": perfidia,
+    "Perfidia": perfidia,
     "Raoni": raoni,
-    "Tainá": taina
+    "Taina": taina
 }
