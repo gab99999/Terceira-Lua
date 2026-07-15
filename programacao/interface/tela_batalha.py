@@ -402,6 +402,7 @@ def main(personagem):
         
         
         pos_jogador = 50
+        pos_inimigo = 840
 
         if animacao_ataque and atacante == "jogador":
 
@@ -416,8 +417,6 @@ def main(personagem):
             elif tempo < 200:
                 pos_inimigo = 840
 
-
-        pos_inimigo = 840
 
         if animacao_ataque_inimigo:
 
