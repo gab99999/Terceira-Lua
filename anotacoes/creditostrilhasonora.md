@@ -1,5 +1,4 @@
 ## Trilha Sonora Exclusiva de Terceira Lua
-## Direitos Reservados
 
 Batalha das Luas
 encontrado em: soundtrack/Batalha_das_Luas.mp3
@@ -8,3 +7,5 @@ encontrado em: soundtrack/Batalha_das_Luas.mp3
 
 Yasmin Pereira Lucas
 Linkedin: 
+
+## Direitos Reservados
