@@ -1,6 +1,6 @@
 # estruturas do combate
 
-
+from turnos.py import SistemaTurnos
 
 def criar_combatente(personagem):
     # cria a cópia temporária de um personagem usada em uma partida.
