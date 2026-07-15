@@ -1,8 +1,5 @@
 import pygame
 import random
-from pathlib import Path
-
-BASE_DIR = Path(__file__).parent
 
 # Controle de FPS
 clock = pygame.time.Clock()
@@ -43,7 +40,7 @@ def main():
     # Carrega e redimensiona os frames dos personagens
     for i in range(6):
         frame_icon = pygame.image.load(
-            BASE_DIR / "assets" / "frame_selecao.png"
+            r"programacao\interface\assets\frame_selecao.png"
         ).convert_alpha()
 
         frame_icon = pygame.transform.scale(
@@ -97,7 +94,7 @@ def main():
         ]
 
         return [
-            pygame.image.load(pasta / f"{d}.png").convert_alpha()
+            pygame.image.load(fr"{pasta}\{d}.png").convert_alpha()
             for d in direcoes
         ]
 
@@ -114,17 +111,19 @@ def main():
 
     # Carrega todos os personagens
     frame_personagens = [
-    carregar_rotacoes(
-        BASE_DIR / "assets" / "personagens" / nome / "rotations"
-    )
-    for nome in nomes_personagens
-]
+        carregar_rotacoes(
+            fr"programacao\interface\assets\personagens\{nome}\rotations"
+        )
+        for nome in nomes_personagens
+    ]
 
     
     # Carrega as descrições dos personagens
     for nome in nomes_personagens:
         with open(
-            BASE_DIR / "assets" / "personagens" / nome / "descricao.md", encoding="utf-8"
+            fr"programacao\interface\assets\personagens\{nome}\descricao.md",
+            "r",
+            encoding="utf-8"
         ) as arquivo:
             descricoes.append(arquivo.read())
 
@@ -147,8 +146,9 @@ def main():
 
     # Carrega o plano de fundo
     background = pygame.image.load(
-        BASE_DIR / "assets" / "fundos" / "background_selecao_personagens.png"
+        r"programacao\interface\assets\fundos\background_selecao_personagens.png"
     ).convert()
+
 
 
     # Define as posições dos personagens
@@ -182,6 +182,8 @@ def main():
 
         # Obtém a posição do mouse
         mouse_pos = pygame.mouse.get_pos()
+
+        mouse_click = pygame.mouse.get_pressed()[0]
 
         # Processa os eventos
         for event in pygame.event.get():
