@@ -1,6 +1,7 @@
 import pygame
 import random
 from pathlib import Path
+from dados_personagens import habilidades
 
 BASE_DIR = Path(__file__).parent
 
@@ -171,9 +172,12 @@ def main():
 
 
     fonte_nome = pygame.font.SysFont("Arial", 48)
+    fonte_habilidade = pygame.font.SysFont("Arial", 32)
     # Nomes dos presonagens
 
     fonte_descricao = pygame.font.SysFont("Arial", 24)
+
+    
 
 
     # Controla o loop principal
@@ -223,6 +227,7 @@ def main():
         # Exibe uma versão ampliada do personagem ao passar o mouse
         for i in range(6):
             if frame_icons_rect[i].collidepoint(mouse_pos):
+
                 personagem = frame_personagens[i][frame]
 
                 personagem = pygame.transform.scale(
@@ -256,6 +261,33 @@ def main():
                 )
 
                 screen.blit(personagem, rect)
+
+
+                # habilidades
+                nome = nomes_personagens[i]
+
+                texto_habilidades = fonte_habilidade.render(
+                    "Habilidades:",
+                    True,
+                    BRANCO
+                )
+
+                screen.blit(texto_habilidades, (900, 400))
+
+
+                y = 450
+
+                for habilidade in habilidades[nome]:
+                    texto = fonte_descricao.render(
+                        habilidade,
+                        True,
+                        BRANCO
+                    )
+
+                    screen.blit(texto, (900, y))
+                    y += 30
+
+        
 
         # Atualiza a tela
         pygame.display.flip()

@@ -2,6 +2,7 @@ import pygame
 import random
 from pathlib import Path
 from batalha import GerenciadorBatalha, EstadoBatalha
+from dados_personagens import habilidades
 
 BASE_DIR = Path(__file__).parent    
 
@@ -95,47 +96,24 @@ def main(personagem):
         )
     )
     
-    habilidades = {
-    "Amara": [
-        "Reação Mágica",
-        "Ondas Elevadas",
-        "Cura Envenenada"
-    ],
 
-    "Antonius": [
-        "Soco Tático",
-        "Granada de Luz",
-        "Tiro Certeiro"
-    ],
-
-    "Nicholas": [
-        "Absorver Calor",
-        "Aquecer Matéria",
-        "Fusão Mágica"
-    ],
-
-    "Perfidia": [
-        "Invocação Lunar",
-        "Pluralidade Estelar",
-        "Brutalizar as Luas"
-    ],
-
-    "Raoni": [
-        "Foco em Penas",
-        "Especialização em Aves",
-        "Inversão Curativa"
-    ],
-
-    "Taina": [
-        "Dilaceração Dupla",
-        "Arremesso de Lâmina",
-        "Apunhalada Pacífica"
-    ]
-}
     
-    opcoes = habilidades[personagem] + ["Interações"]
+    opcoes_principais = habilidades[personagem] + ["Interações"]
+
+    nomes_interacoes = {
+        "estrela_de_cura": "Estrela de Cura",
+        "estrela_de_precisao": "Estrela de Precisão",
+        "estrela_de_dano": "Estrela de Dano",
+        "estrela_da_evasao": "Estrela da Evasão",
+        "estrela_misteriosa": "Estrela Misteriosa",
+        "absorver_sol": "Absorver Sol"
+    }
+
+    interacoes_menu = []
+    opcoes = opcoes_principais
 
     selecionado = 0
+    menu_interacao = False
 
     
 
@@ -170,8 +148,14 @@ def main(personagem):
     dano_jogador_alpha = 255
     tempo_dano_jogador = 0
 
+    acao_realizada = False
+
     esperando_ataque_inimigo = False
     tempo_espera_inimigo = 0
+
+    dano_recebido = 0
+
+    menu_interacao = False
 
     rodando = True
 
@@ -207,38 +191,100 @@ def main(personagem):
                 if event.type == pygame.KEYDOWN:
 
                     if event.key == pygame.K_UP:
-                        selecionado = (selecionado-1)%4
+                        selecionado = (selecionado-1)%len(opcoes)
 
                     elif event.key == pygame.K_DOWN:
-                        selecionado = (selecionado+1)%4
+                        selecionado = (selecionado+1)%len(opcoes)
 
                     elif event.key == pygame.K_RETURN:
 
                         vida_jogador_antes = jogador["vida"]
                         vida_inimigo_antes = bot["vida"]
 
-                        if selecionado == 0:
-                            estado = batalha.executar_acao("habilidade_1")
-                            esperando_ataque = True
-                            tempo_espera = pygame.time.get_ticks()
-
-                        elif selecionado == 1:
-                            estado = batalha.executar_acao("habilidade_2")
-                            esperando_ataque = True
-                            tempo_espera = pygame.time.get_ticks()                            
-
-                        elif selecionado == 2:
-                            estado = batalha.executar_acao("habilidade_3")
-                            esperando_ataque = True
-                            tempo_espera = pygame.time.get_ticks()
+                        acao_realizada = False
 
 
-                        dano = vida_inimigo_antes - estado["bot"]["vida"]
-                        dano_recebido = vida_jogador_antes - estado["jogador"]["vida"]
+                        # ============================
+                        # MENU DE INTERAÇÕES
+                        # ============================
+                        if menu_interacao:
+
+                            if selecionado == len(opcoes)-1:  # Voltar
+
+                                opcoes = opcoes_principais
+                                selecionado = 0
+                                menu_interacao = False
+
+                            else:
+
+                                interacao_escolhida = interacoes_menu[selecionado]
+
+                                try:
+                                    estado = batalha.executar_acao(
+                                        "interacao",
+                                        interacao_escolhida
+                                    )
+                                    acao_realizada = True
+
+                                except ValueError:
+                                    continue
+
+                                esperando_ataque = True
+                                tempo_espera = pygame.time.get_ticks()
+
+                                menu_interacao = False
+                                opcoes = opcoes_principais
+                                selecionado = 0
+
+
+                        # ============================
+                        # MENU NORMAL
+                        # ============================
+                        else:
+
+                            if selecionado == 0:
+                                estado = batalha.executar_acao("habilidade_1")
+                                acao_realizada = True
+
+                            elif selecionado == 1:
+                                estado = batalha.executar_acao("habilidade_2")
+                                acao_realizada = True
+
+                            elif selecionado == 2:
+                                estado = batalha.executar_acao("habilidade_3")
+                                acao_realizada = True
+
+                            elif selecionado == 3:
+
+                                interacoes_menu = list(batalha.resumo()["interacoes_disponiveis"])
+
+                                opcoes = [
+                                    nomes_interacoes[i]
+                                    for i in interacoes_menu
+                                ]
+
+                                opcoes.append("Voltar")
+
+                                selecionado = 0
+                                menu_interacao = True
+
+
+                            if not menu_interacao:
+                                esperando_ataque = True
+                                tempo_espera = pygame.time.get_ticks()
+                            
+
+
+                        dano = 0
+                        dano_recebido = 0
+
+                        if acao_realizada:
+                            dano = vida_inimigo_antes - estado["bot"]["vida"]
+                            dano_recebido = vida_jogador_antes - estado["jogador"]["vida"]
 
                         if dano > 0:
 
-                            dano_visual = int(dano)
+                            dano_inimigo_visual = int(dano)
 
                             dano_y = 250
                             dano_alpha = 255
@@ -402,6 +448,7 @@ def main(personagem):
         
         
         pos_jogador = 50
+        pos_inimigo = 840
 
         if animacao_ataque and atacante == "jogador":
 
@@ -416,8 +463,6 @@ def main(personagem):
             elif tempo < 200:
                 pos_inimigo = 840
 
-
-        pos_inimigo = 840
 
         if animacao_ataque_inimigo:
 
