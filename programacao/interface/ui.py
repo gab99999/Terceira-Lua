@@ -76,8 +76,6 @@ def main():
     # Redimensiona a logo para 60% do tamanho original.
 
     # get_width() e get_height() retornam o tamanho atual da imagem.
-    # int() converte o resultado para inteiro, pois posições e tamanhos
-    # de pixels precisam ser números inteiros.
 
     logo_rect = logo.get_rect(center=(largura / 2, (altura / 2) - 150))
 

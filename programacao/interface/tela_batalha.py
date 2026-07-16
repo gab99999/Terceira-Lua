@@ -23,29 +23,19 @@ def main(personagem):
     fonte_log = pygame.font.SysFont("Arial", 20)
     fonte_dano = pygame.font.SysFont("Arial", 60, bold=True)
     fonte_desc = pygame.font.SysFont("Arial", 18)
-
-    fonte_desc = pygame.font.SysFont("Arial", 18)
-    fonte_desc_negrito = pygame.font.SysFont("Arial", 18, bold=True)
     fonte_desc_titulo = pygame.font.SysFont("Arial", 22, bold=True)
 
-    background = pygame.image.load(
-        BASE_DIR / "assets" / "fundos" / "background_batalha.png"
-    ).convert()
+    background = pygame.image.load( BASE_DIR / "assets" / "fundos" / "background_batalha.png" ).convert()
 
-    background_lua = pygame.image.load(
-        BASE_DIR / "assets" / "fundos" / "background_batalha_terceira_lua.png"
-    ).convert()
+    background_lua = pygame.image.load( BASE_DIR / "assets" / "fundos" / "background_batalha_terceira_lua.png" ).convert()
 
     BRANCO = (255,255,255)
     PRETO = (25,25,25)
     VERDE = (0,200,0)
     VERMELHO = (200,0,0)
-    AMARELO = (255,220,0)
-    AZUL = (70,120,255)
-    
+    AMARELO = (255,220,0)    
 
     def desenhar_barra(x,y,vida,max_vida):
-
 
         vida = int(vida)
         max_vida = int(max_vida)
@@ -97,23 +87,14 @@ def main(personagem):
 
                 titulo = linha.replace("#", "").strip()
 
-                screen.blit(
-                    fonte_desc_titulo.render(titulo, True, AMARELO),
-                    (x, y)
-                )
+                screen.blit( fonte_desc_titulo.render(titulo, True, AMARELO), (x, y) )
 
                 y += 30
                 continue
 
             if linha.startswith("---"):
 
-                pygame.draw.line(
-                    screen,
-                    BRANCO,
-                    (x, y),
-                    (x + largura, y),
-                    1
-                )
+                pygame.draw.line( screen, BRANCO, (x, y), (x + largura, y), 1 )
 
                 y += 10
                 continue
@@ -122,10 +103,7 @@ def main(personagem):
 
             for parte in quebrar_linha(linha, fonte_desc, largura):
 
-                screen.blit(
-                    fonte_desc.render(parte, True, BRANCO),
-                    (x, y)
-                )
+                screen.blit( fonte_desc.render(parte, True, BRANCO), (x, y) )
 
                 y += 22
 
@@ -153,31 +131,14 @@ def main(personagem):
     jogador = estado["jogador"]
     bot = estado["bot"]
 
-    imagem_personagem = pygame.image.load(
-        BASE_DIR / "assets" / "personagens" / personagem / "rotations" / "east.png"
-    ).convert_alpha()
+    imagem_personagem = pygame.image.load( BASE_DIR / "assets" / "personagens" / personagem / "rotations" / "east.png" ).convert_alpha()
 
-    imagem_inimigo = pygame.image.load(
-            BASE_DIR / "assets" / "personagens" / inimigo / "rotations" / "west.png"
-    ).convert_alpha()
+    imagem_inimigo = pygame.image.load( BASE_DIR / "assets" / "personagens" / inimigo / "rotations" / "west.png" ).convert_alpha()
 
 
-    imagem_inimigo = pygame.transform.scale(imagem_inimigo,
-(
-    imagem_inimigo.get_width()*3,
-    imagem_inimigo.get_height()*3
-)
-    )
+    imagem_inimigo = pygame.transform.scale(imagem_inimigo, ( imagem_inimigo.get_width()*3, imagem_inimigo.get_height()*3 ) )
 
-    imagem_personagem = pygame.transform.scale(
-        imagem_personagem,
-        (
-            imagem_personagem.get_width()*3,
-            imagem_personagem.get_height()*3
-        )
-    )
-    
-
+    imagem_personagem = pygame.transform.scale( imagem_personagem, ( imagem_personagem.get_width()*3, imagem_personagem.get_height()*3 ) )
     
     opcoes_principais = habilidades[personagem] + ["Interações"]
 
@@ -193,7 +154,6 @@ def main(personagem):
     interacoes_menu = []
     opcoes = opcoes_principais
 
-    # Carrega descrições das habilidades
     descricoes = {}
 
     arquivo = BASE_DIR / "assets" / "descricoes_habilidades" / f"{personagem}.md"
@@ -239,7 +199,6 @@ def main(personagem):
     selecionado = 0
     menu_interacao = False
 
-    
 
 
     tomou_dano = False
@@ -262,11 +221,9 @@ def main(personagem):
 
     tempo_dano_inimigo = 0
 
-    # animação do inimigo atacando
     animacao_ataque_inimigo = False
     tempo_ataque_inimigo = 0
 
-    # dano recebido pelo jogador
     dano_jogador_visual = None
     dano_jogador_y = 250
     dano_jogador_alpha = 255
@@ -337,10 +294,6 @@ def main(personagem):
 
                         acao_realizada = False
 
-
-                        # ============================
-                        # MENU DE INTERAÇÕES
-                        # ============================
                         if menu_interacao:
 
                             if selecionado == len(opcoes)-1:  # Voltar
@@ -369,11 +322,6 @@ def main(personagem):
                                 menu_interacao = False
                                 opcoes = opcoes_principais
                                 selecionado = 0
-
-
-                        # ============================
-                        # MENU NORMAL
-                        # ============================
                         else:
 
                             if selecionado == 0:
@@ -447,7 +395,7 @@ def main(personagem):
 
             tempo = pygame.time.get_ticks() - tempo_espera_inimigo
 
-            if tempo > 1000:  # 1 segundo esperando
+            if tempo > 1000:
 
                 dano_jogador_visual = int(dano_recebido)
 
@@ -465,8 +413,6 @@ def main(personagem):
             lua_animacao = True
             transicao_lua = True
             alpha_lua = 0
-
-        
 
         if transicao_lua:
 
@@ -500,24 +446,13 @@ def main(personagem):
 
             tempo = pygame.time.get_ticks() - tempo_ataque
 
-            # sobe
             dano_y -= 2
 
-            # desaparece aos poucos
             dano_alpha = max(0, 255 - int(tempo * 0.35))
-
-            texto_dano = fonte_dano.render(
-                f"-{dano_visual}",
-                True,
-                VERMELHO
-            )
+            texto_dano = fonte_dano.render( f"-{dano_visual}", True, VERMELHO )
 
             texto_dano.set_alpha(dano_alpha)
-
-            screen.blit(
-                texto_dano,
-                (850, dano_y)
-            )
+            screen.blit( texto_dano, (850, dano_y) )
 
             if tempo > 800:
                 dano_visual = None
@@ -529,61 +464,22 @@ def main(personagem):
 
             dano_jogador_y -= 2
 
-            dano_jogador_alpha = max(
-                0,
-                255 - int(tempo * 0.35)
-            )
+            dano_jogador_alpha = max( 0, 255 - int(tempo * 0.35) )
 
-            texto = fonte_dano.render(
-                f"-{dano_jogador_visual}",
-                True,
-                VERMELHO
-            )
+            texto = fonte_dano.render( f"-{dano_jogador_visual}", True, VERMELHO )
 
             texto.set_alpha(dano_jogador_alpha)
 
-            screen.blit(
-                texto,
-                (250, dano_jogador_y)
-            )
+            screen.blit( texto, (250, dano_jogador_y) )
 
             if tempo > 800:
                 dano_jogador_visual = None
 
-
-        desenhar_barra(
-                    100,
-                    130,
-                    jogador["vida"],
-                    jogador["vida_maxima"]
-                )
-        desenhar_barra(
-                    900,
-                    130,
-                    bot["vida"],
-                    bot["vida_maxima"]
-                )
+        desenhar_barra( 100, 130, jogador["vida"], jogador["vida_maxima"] )
+        desenhar_barra( 900, 130, bot["vida"], bot["vida_maxima"] )
         
-
-
-
-        screen.blit(
-    fonte.render(
-        f'HP {int(jogador["vida"])}/{int(jogador["vida_maxima"])}',
-        True,
-        BRANCO
-    ),
-    (165,155)
-)
-        screen.blit(
-    fonte.render(
-        f'HP {int(bot["vida"])}/{int(bot["vida_maxima"])}',
-        True,
-        BRANCO
-    ),
-    (960,155)
-)
-        
+        screen.blit( fonte.render( f'HP {int(jogador["vida"])}/{int(jogador["vida_maxima"])}', True, BRANCO ), (165,155) )
+        screen.blit( fonte.render( f'HP {int(bot["vida"])}/{int(bot["vida_maxima"])}', True, BRANCO ), (960,155) )
         
         pos_jogador = 50
         pos_inimigo = 840
@@ -638,23 +534,13 @@ def main(personagem):
 
             dano_inimigo_y -= 2
 
-            dano_inimigo_alpha = max(
-                0,
-                255 - int(tempo * 0.35)
-            )
+            dano_inimigo_alpha = max( 0, 255 - int(tempo * 0.35) )
 
-            texto = fonte_dano.render(
-                f"-{dano_inimigo_visual}",
-                True,
-                VERMELHO
-            )
+            texto = fonte_dano.render( f"-{dano_inimigo_visual}", True, VERMELHO )
 
             texto.set_alpha(dano_inimigo_alpha)
 
-            screen.blit(
-                texto,
-                (900, dano_inimigo_y)
-            )
+            screen.blit( texto, (900, dano_inimigo_y) )
 
             if tempo > 800:
                 dano_inimigo_visual = None
@@ -674,11 +560,7 @@ def main(personagem):
             y += 24
 
         if estado["estado"] == EstadoBatalha.FIM_BATALHA:
-            texto = fonte_titulo.render(
-                "Pressione ENTER para voltar",
-                True,
-                AMARELO
-            )
+            texto = fonte_titulo.render( "Pressione ENTER para voltar", True, AMARELO )
             screen.blit(texto, (470, 400))
 
         for i, opcao in enumerate(opcoes):
@@ -698,32 +580,19 @@ def main(personagem):
 
             screen.blit(texto, (x, y))
 
-        # Mostra descrição
         if menu_interacao:
 
             nome = opcoes[selecionado]
 
             if nome in descricoes_interacoes:
 
-                desenhar_markdown(
-                    descricoes_interacoes[nome],
-                        540,
-                        550,
-                        300
-                )
-
+                desenhar_markdown( descricoes_interacoes[nome], 540, 550, 300 )
         elif selecionado < 3:
 
             nome = opcoes[selecionado]
 
             if nome in descricoes:
-
-                desenhar_markdown(
-                    descricoes[nome],
-                        540,
-                        550,
-                        300
-                )
+                desenhar_markdown( descricoes[nome], 540, 550, 300 )
 
         pygame.display.flip()
 
