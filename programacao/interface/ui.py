@@ -1,4 +1,5 @@
 import pygame
+import webbrowser
 from pathlib import Path
 
 BASE_DIR = Path(__file__).parent
@@ -83,6 +84,9 @@ def main():
 
     fonte_creditos = pygame.font.SysFont(None, 22)
 
+    link = "https://www.linkedin.com/in/yasmin-pereira-lucas"
+    link_rect = None
+
     # Controla o loop principal
     running = True
     while running:
@@ -94,6 +98,9 @@ def main():
 
             # Clique do mouse
             if event.type == pygame.MOUSEBUTTONDOWN:
+                if link_rect and link_rect.collidepoint(event.pos):
+                    webbrowser.open(link)
+                
                 if event.button == 1:
 
                     # Botão Sair
@@ -130,14 +137,29 @@ def main():
         creditos = [
             "Trilha Sonora: Batalha das Luas",
             "Composição: Yasmin Pereira Lucas",
+            "LinkedIn: linkedin.com/in/yasmin-pereira-lucas",
             "Todos os direitos reservados."
         ]
 
-        y = HEIGHT - 70
+        y = HEIGHT - 90
+
+        mouse = pygame.mouse.get_pos()
 
         for linha in creditos:
-            texto = fonte_creditos.render(linha, True, (255, 255, 255))
-            screen.blit(texto, (20, y))
+            # Deixa o LinkedIn azul
+            if linha.startswith("LinkedIn"):
+                cor = (120, 200, 255) if link_rect and link_rect.collidepoint(mouse) else (80, 160, 255)
+            else:
+                cor = (255, 255, 255)
+
+            texto = fonte_creditos.render(linha, True, cor)
+            rect = texto.get_rect(topleft=(20, y))
+
+            screen.blit(texto, rect)
+
+            if linha.startswith("LinkedIn"):
+                link_rect = rect
+
             y += 18
 
         # Atualiza a tela

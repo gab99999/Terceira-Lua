@@ -8,7 +8,7 @@ Tainá utiliza suas duas adagas para atacar simultaneamente seu inimigo e a si m
 
 ---
 
-# Arremesso de Lâminas
+# Arremesso de Lâmina
 
 Tainá lança seis lâminas em sequência. Quatro atingem o inimigo, enquanto duas retornam para feri-la.
 

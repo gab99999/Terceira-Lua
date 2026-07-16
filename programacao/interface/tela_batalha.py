@@ -22,6 +22,11 @@ def main(personagem):
     fonte_titulo = pygame.font.SysFont("Arial", 42)
     fonte_log = pygame.font.SysFont("Arial", 20)
     fonte_dano = pygame.font.SysFont("Arial", 60, bold=True)
+    fonte_desc = pygame.font.SysFont("Arial", 18)
+
+    fonte_desc = pygame.font.SysFont("Arial", 18)
+    fonte_desc_negrito = pygame.font.SysFont("Arial", 18, bold=True)
+    fonte_desc_titulo = pygame.font.SysFont("Arial", 22, bold=True)
 
     background = pygame.image.load(
         BASE_DIR / "assets" / "fundos" / "background_batalha.png"
@@ -37,6 +42,7 @@ def main(personagem):
     VERMELHO = (200,0,0)
     AMARELO = (255,220,0)
     AZUL = (70,120,255)
+    
 
     def desenhar_barra(x,y,vida,max_vida):
 
@@ -48,6 +54,77 @@ def main(personagem):
         vida_atual = largura * (vida/max_vida)
 
         pygame.draw.rect(screen, VERDE, (x,y,vida_atual,altura))
+
+
+    def quebrar_linha(texto, fonte, largura):
+
+        palavras = texto.split()
+
+        linhas = []
+        linha = ""
+
+        for palavra in palavras:
+
+            teste = linha + palavra + " "
+
+            if fonte.size(teste)[0] <= largura:
+                linha = teste
+            else:
+                linhas.append(linha.strip())
+                linha = palavra + " "
+
+        if linha:
+            linhas.append(linha.strip())
+
+        return linhas
+
+
+    def desenhar_markdown(texto, x, y, largura):
+
+        for linha in texto:
+
+            linha = linha.strip()
+
+            if not linha:
+                y += 8
+                continue
+
+            if linha.startswith("#"):
+
+                titulo = linha.replace("#", "").strip()
+
+                screen.blit(
+                    fonte_desc_titulo.render(titulo, True, AMARELO),
+                    (x, y)
+                )
+
+                y += 30
+                continue
+
+            if linha.startswith("---"):
+
+                pygame.draw.line(
+                    screen,
+                    BRANCO,
+                    (x, y),
+                    (x + largura, y),
+                    1
+                )
+
+                y += 10
+                continue
+
+            linha = linha.replace("**", "")
+
+            for parte in quebrar_linha(linha, fonte_desc, largura):
+
+                screen.blit(
+                    fonte_desc.render(parte, True, BRANCO),
+                    (x, y)
+                )
+
+                y += 22
+
 
     transicao_lua = False
     alpha_lua = 0
@@ -111,6 +188,49 @@ def main(personagem):
 
     interacoes_menu = []
     opcoes = opcoes_principais
+
+    # Carrega descrições das habilidades
+    descricoes = {}
+
+    arquivo = BASE_DIR / "assets" / "descricoes_habilidades" / f"{personagem}.md"
+
+    with open(arquivo, "r", encoding="utf-8") as f:
+        texto = f.read()
+
+    blocos = texto.split("---")
+
+    for bloco in blocos:
+        bloco = bloco.strip()
+
+        if not bloco:
+            continue
+
+        linhas = [l.strip() for l in bloco.splitlines() if l.strip()]
+
+        titulo = linhas[0].replace("#", "").strip()
+
+        descricoes[titulo] = linhas
+
+    descricoes_interacoes = {}
+
+    arquivo = BASE_DIR / "assets" / "descricoes_habilidades" / "interacoes.md"
+
+    with open(arquivo, encoding="utf-8") as f:
+        texto = f.read()
+
+    blocos = texto.split("---")
+
+    for bloco in blocos:
+        bloco = bloco.strip()
+
+        if not bloco:
+            continue
+
+        linhas = [l.strip() for l in bloco.splitlines() if l.strip()]
+
+        titulo = linhas[0].replace("#", "").strip()
+
+        descricoes_interacoes[titulo] = linhas
 
     selecionado = 0
     menu_interacao = False
@@ -573,6 +693,33 @@ def main(personagem):
             y = 570 + linha * 30
 
             screen.blit(texto, (x, y))
+
+        # Mostra descrição
+        if menu_interacao:
+
+            nome = opcoes[selecionado]
+
+            if nome in descricoes_interacoes:
+
+                desenhar_markdown(
+                    descricoes_interacoes[nome],
+                        540,
+                        550,
+                        300
+                )
+
+        elif selecionado < 3:
+
+            nome = opcoes[selecionado]
+
+            if nome in descricoes:
+
+                desenhar_markdown(
+                    descricoes[nome],
+                        540,
+                        550,
+                        300
+                )
 
         pygame.display.flip()
 
