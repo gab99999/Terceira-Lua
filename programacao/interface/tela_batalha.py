@@ -191,10 +191,20 @@ def main(personagem):
                 if event.type == pygame.KEYDOWN:
 
                     if event.key == pygame.K_UP:
-                        selecionado = (selecionado-1)%len(opcoes)
+                        if selecionado - 2 >= 0:
+                            selecionado -= 2
 
                     elif event.key == pygame.K_DOWN:
-                        selecionado = (selecionado+1)%len(opcoes)
+                        if selecionado + 2 < len(opcoes):
+                            selecionado += 2
+
+                    elif event.key == pygame.K_LEFT:
+                        if selecionado % 2 == 1:
+                            selecionado -= 1
+
+                    elif event.key == pygame.K_RIGHT:
+                        if selecionado % 2 == 0 and selecionado + 1 < len(opcoes):
+                            selecionado += 1
 
                     elif event.key == pygame.K_RETURN:
 
@@ -286,8 +296,12 @@ def main(personagem):
 
                             dano_inimigo_visual = int(dano)
 
+
+                            dano_inimigo_y = 250
+                            dano_inimigo_alpha = 255
                             dano_y = 250
                             dano_alpha = 255
+                            tempo_dano_inimigo = pygame.time.get_ticks()
 
                             tomou_dano = True
                             tempo_dano = pygame.time.get_ticks()
@@ -515,7 +529,7 @@ def main(personagem):
 
             screen.blit(
                 texto,
-                (100, dano_inimigo_y)
+                (900, dano_inimigo_y)
             )
 
             if tempo > 800:
@@ -543,16 +557,22 @@ def main(personagem):
             )
             screen.blit(texto, (470, 400))
 
-        for i,opcao in enumerate(opcoes):
+        for i, opcao in enumerate(opcoes):
 
             cor = BRANCO
 
             if i == selecionado and estado["estado"] == EstadoBatalha.TURNO_JOGADOR:
                 cor = AMARELO
 
-            texto = fonte.render(opcao,True,cor)
+            texto = fonte.render(opcao, True, cor)
 
-            screen.blit(texto,(50,570+i*30))
+            coluna = i % 2
+            linha = i // 2
+
+            x = 50 if coluna == 0 else 280
+            y = 570 + linha * 30
+
+            screen.blit(texto, (x, y))
 
         pygame.display.flip()
 

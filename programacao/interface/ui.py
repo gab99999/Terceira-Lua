@@ -81,8 +81,7 @@ def main():
     # Posição do botão Sair
     botao_sair_rect = botao_sair.get_rect(center=(painel_rect.centerx, painel_rect.centery - 8))
 
-    # Fonte
-    fonte = pygame.font.SysFont(None, 40)
+    fonte_creditos = pygame.font.SysFont(None, 22)
 
     # Controla o loop principal
     running = True
@@ -127,6 +126,19 @@ def main():
 
         # Desenha o botão Sair
         screen.blit(botao_sair, botao_sair_rect)
+
+        creditos = [
+            "Trilha Sonora: Batalha das Luas",
+            "Composição: Yasmin Pereira Lucas",
+            "Todos os direitos reservados."
+        ]
+
+        y = HEIGHT - 70
+
+        for linha in creditos:
+            texto = fonte_creditos.render(linha, True, (255, 255, 255))
+            screen.blit(texto, (20, y))
+            y += 18
 
         # Atualiza a tela
         pygame.display.flip()
