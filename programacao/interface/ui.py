@@ -8,12 +8,10 @@ def main():
 
     pygame.init()
 
-    # Cores
-    BRANCO = (255, 255, 255)
-    PRETO = (0, 0, 0)
-    VERMELHO = (255, 0, 0)
-    AZUL = (0, 0, 255)
-    VERDE = (0, 255, 0)
+    pygame.mixer.music.load(
+        BASE_DIR.parent / "soundtrack" / "Batalha_das_Luas.mp3"
+    )
+    pygame.mixer.music.play(-1)
 
     # Tela
     WIDTH, HEIGHT = 1280, 720
