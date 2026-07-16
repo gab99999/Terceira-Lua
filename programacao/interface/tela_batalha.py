@@ -46,6 +46,10 @@ def main(personagem):
 
     def desenhar_barra(x,y,vida,max_vida):
 
+
+        vida = int(vida)
+        max_vida = int(max_vida)
+
         largura = 250
         altura = 20
 
@@ -409,8 +413,8 @@ def main(personagem):
                         dano_recebido = 0
 
                         if acao_realizada:
-                            dano = vida_inimigo_antes - estado["bot"]["vida"]
-                            dano_recebido = vida_jogador_antes - estado["jogador"]["vida"]
+                            dano = int(vida_inimigo_antes - estado["bot"]["vida"])
+                            dano_recebido = int(vida_jogador_antes - estado["jogador"]["vida"])
 
                         if dano > 0:
 
@@ -565,7 +569,7 @@ def main(personagem):
 
         screen.blit(
     fonte.render(
-        f'HP {jogador["vida"]}/{jogador["vida_maxima"]}',
+        f'HP {int(jogador["vida"])}/{int(jogador["vida_maxima"])}',
         True,
         BRANCO
     ),
@@ -573,7 +577,7 @@ def main(personagem):
 )
         screen.blit(
     fonte.render(
-        f'HP {bot["vida"]}/{bot["vida_maxima"]}',
+        f'HP {int(bot["vida"])}/{int(bot["vida_maxima"])}',
         True,
         BRANCO
     ),

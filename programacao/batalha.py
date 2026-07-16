@@ -51,9 +51,18 @@ class GerenciadorBatalha:
     def _criar_se_necessario(personagem):
         if isinstance(personagem, str):
             personagem = personagens[personagem]
+
         if "vida_maxima" in personagem:
+            personagem["vida_maxima"] = int(personagem["vida_maxima"])
+            personagem["vida"] = int(personagem["vida"])
             return personagem
-        return criar_combatente(personagem)
+
+        combatente = criar_combatente(personagem)
+
+        combatente["vida_maxima"] = int(combatente["vida_maxima"])
+        combatente["vida"] = int(combatente["vida"])
+
+        return combatente
 
     def iniciar_combate(self):
         """ erepara a primeira vez do jogador e devolve o estado inicial"""
